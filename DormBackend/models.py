@@ -26,9 +26,14 @@ class Room(models.Model):
     build = models.CharField(max_length=32, null=True, default="")
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注
-    capacity = models.IntegerField(default=0)
+    capacity = models.IntegerField(default=0)   # 实际已住
 
-class Account(models.Model):
+
+class ManagerAccount(models.Model):
     account_name = models.ForeignKey("Teacher", on_delete=models.CASCADE)
     pwd = models.CharField(max_length=32, default="123456")
     level = models.IntegerField( default="1")
+
+class StuAccount(models.Model):
+    account_name = models.ForeignKey("Student", on_delete=models.CASCADE)
+    pwd = models.CharField(max_length=32, default="123456")
