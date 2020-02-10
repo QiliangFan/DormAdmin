@@ -26,6 +26,7 @@ class Room(models.Model):
     build = models.CharField(max_length=32, null=True, default="")
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注
+    capacity = models.IntegerField(default=0)
 
 class Account(models.Model):
     account_name = models.ForeignKey("Teacher", on_delete=models.CASCADE)
