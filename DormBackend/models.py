@@ -11,7 +11,7 @@ class Student(models.Model):
     tutor = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True)
     college = models.CharField(max_length=32, null=True, default="")  # 学院
     major = models.CharField(max_length=32, null=True, default="")  # 专业
-    room = models
+    room = models.ForeignKey("Room", on_delete=models.SET_NULL, null=True)
 
 
 class Teacher(models.Model):
