@@ -34,6 +34,7 @@ class ManagerAccount(models.Model):
     pwd = models.CharField(max_length=32, default="123456")
     level = models.IntegerField( default="1")
 
+
 class StuAccount(models.Model):
     account_name = models.ForeignKey("Student", on_delete=models.CASCADE)
     pwd = models.CharField(max_length=32, default="123456")
