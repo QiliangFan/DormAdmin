@@ -47,3 +47,4 @@ class InspectionHistory(models.Model):
     room = models.ForeignKey("Room", on_delete=models.CASCADE)
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注
+
