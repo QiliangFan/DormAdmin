@@ -1,0 +1,79 @@
+{% extends './template.html' %}
+{% block userInfo %}
+    <a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+        <img src="/static/img/avatar.png" alt="{{ stu.name }}" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow">
+    </a>
+    <div aria-labelledby="userInfo" class="dropdown-menu">
+        <a href="#" class="dropdown-item">
+            <strong class="d-block text-uppercase headings-font-family">{{ stu.name }}</strong></a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">注销</a>
+    </div>
+{% endblock %}
+{% block menu %}
+    <li class="sidebar-list-item">
+        <a href="/index" class="sidebar-link text-muted"><i class="o-home-1 mr-3 text-gray"></i><span>主页</span></a>
+    </li>
+    <li class="sidebar-list-item">
+        <a href="/student_info" class="sidebar-link text-muted active"><i class="o-database-1 mr-3 text-gray"></i><span>学生个人信息</span></a></li>
+    <li class="sidebar-list-item">
+        <a href="/mate_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>同宿人员信息</span></a></li>
+    <li class="sidebar-list-item">
+        <a href="/clean_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>宿舍卫生情况</span></a></li>
+{% endblock %}
+{% block base %}
+    <div class="col-lg-12 mb-5 pt-5">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="h6 text-uppercase mb-0">个人信息</h3>
+                      <small> 后三项可更改 </small>
+                  </div>
+                  <div class="card-body">
+                    <form action="/change_stu_info" method="post">
+                        <input type="text" value="{{ stu.stu_id }}" name="stu_id" style="display: none">
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">学号</label>
+                        <div class="form-control">{{ stu.stu_id }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">姓名</label>
+                        <div class="form-control">{{ stu.name }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">宿舍号</label>
+                        <div class="form-control">{{ stu.room.room_id }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">学院</label>
+                          <div class="form-control">{{ stu.college }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">级别</label>
+                          <div class="form-control">{{ stu.detail }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">导师</label>
+                          <div class="form-control">{{ stu.tutor }}</div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">电话</label>
+                        <input type="text" value="{{ stu.tel }}" class="form-control" name="tel">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">紧急联系人电话</label>
+                        <input type="text" value="{{ stu.emergence_tel }}" class="form-control" name="emergence_tel">
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label text-uppercase">家庭住址</label>
+                          <textarea class="form-control" id="Textarea1" rows="3" name="home_address">{{ stu.home_address }}</textarea>
+                      </div>
+
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-primary">修改</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+{% endblock %}

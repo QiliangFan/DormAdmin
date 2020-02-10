@@ -1,0 +1,24 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 98vw;
+    height: 98vh;
+    overflow-x: hidden;
+}
+
+input[type=radio] {
+    width: 2vw;
+    height: 2vw;
+}
+
+input[type=radio]:hover {
+    cursor: pointer;
+}
+
+form > div {
+    margin-top: 5vh;
+}
+
+button:hover {
+    cursor: pointer;
+}
