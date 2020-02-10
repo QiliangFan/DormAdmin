@@ -83,9 +83,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'DormAdmin',
-        'USER':'root',
-        'PASSWORD':'liangliang',
-        'HOST':'127.0.0.1',
+        'USER':'sxj',
+        'PASSWORD':'nksxj13622020972',
+        'HOST':'localhost',
         'PORT':'3306',
     }
 }
