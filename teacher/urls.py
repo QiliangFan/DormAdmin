@@ -13,4 +13,5 @@ urlpatterns = [
     ,url(r'inspection_warning$', inspection_warning)
     ,url(r"add_inspection_history$", add_inspection_history)
     ,url(r"manage_bed$", manage_bed)
+    ,url(r'del_dorm_information$', del_dorm_information)
 ]

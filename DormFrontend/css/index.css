@@ -4,6 +4,8 @@ body {
     width: 98vw;
     height: 98vh;
     overflow-x: hidden;
+    background: url(../img/11.jpg) no-repeat;
+    background-size: 100vw 100vh;
 }
 
 input[type=radio] {
@@ -21,4 +23,10 @@ form > div {
 
 button:hover {
     cursor: pointer;
+}
+
+label{
+    font-weight: bolder;
+    color: #f0fcff;
+    font-size: 18px;
 }

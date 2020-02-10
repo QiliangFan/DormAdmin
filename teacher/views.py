@@ -37,3 +37,7 @@ def add_inspection_history(request: HttpRequest):
 
 def manage_bed(request: HttpRequest):
     return render(request, "teacher/components/manage_bed.html", {})
+
+
+def del_dorm_information(request: HttpRequest):
+    return render(request, "teacher/components/del_dorm_information.html", {})
