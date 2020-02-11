@@ -1,26 +1,101 @@
 <!--宿舍卫生-->
 {% extends "../../templates/template.html" %}
 {% block base %}
-<div class="col-lg-12 mb-5 pt-5" style="padding-top: 2vh !important;">
-    <div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-pills card-header-pills">
-      <li class="nav-item">
-        <a class="nav-link active" href="index">宿舍卫生</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="dormmanage">学生住宿管理</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="targetsearch">定向查询</a>
-      </li>
-    </ul>
-  </div>
+    <div class="col-lg-12 mb-5 pt-5" style="padding-top: 2vh !important;">
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index">宿舍卫生</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dormmanage">学生住宿管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="targetsearch">定向查询</a>
+                    </li>
+                </ul>
+            </div>
 
-  <div class="card-body" style="margin-top: 0;">
-    <!--表格-->
-      {{ history }}
-  </div>
-</div>
-</div>
+            <div class="card-body" style="margin-top: 0;">
+                <!--表格-->
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">检查时间</th>
+                        <th scope="col">宿舍楼</th>
+                        <th scope="col">门洞号</th>
+                        <th scope="col">宿舍房间号</th>
+                        <th scope="col">单间号</th>
+                        <th scope="col">结果</th>
+                    </tr>
+                    </thead>
+                    <tbody id="divide_page_table">
+
+                    <script>
+                        var temp_list = []
+                        {% for item in history %}
+                            temp_list.push({
+                                "date": "{{ item.date|date:'Y-m-d' }} ",
+                                "build": "{{ item.room.build }} ",
+                                "door_id": "{{ item.room.door_id }}",
+                                "room_id": "{{ item.room.room_id }}",
+                                "singleRoom_id": "{{ item.room.singleRoom_id }}",
+                                "result": "{{ item.result }}"
+                            });
+                        {% endfor %}
+                        $(function () {
+                            init(temp_list, 10);
+                            console.log(item_list);
+
+                            refresh();
+                        });
+
+                        function refresh() {
+                            $("#divide_page_table").empty();
+                            console.log(item_list)
+                            for (let i = start_offset; i <= end_offset; i++) {
+                                let item = item_list[i]
+                                $("#divide_page_table").append("<tr>\n" +
+                                    "<th scope=\"row\">" + item.date + "</th>\n" +
+                                    "<td> " + item.build + "</td>\n" +
+                                    "<td> " + item.door_id + "</td>\n" +
+                                    "<td> " + item.room_id + "</td>\n" +
+                                    "<td> " + item.singleRoom_id + "</td>\n" +
+                                    "<td> " + item.result + "</td>\n" +
+                                    "</tr>");
+                            }
+                        }
+
+
+                    </script>
+
+                    {% for item in history %}
+                        <tr>
+                            <th scope="row">item.date</th>
+                            <td>item.room.build</td>
+                            <td>item.door_id</td>
+                            <td>item.room_id</td>
+                            <td>item.singleRoom_id</td>
+                            <td>item.result</td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button onclick="first()" id="first" type="button" class="btn btn-primary">First</button>
+                    <button onclick="previous()" id="previous" type="button" class="btn btn-primary">Previous</button>
+                    <button onclick="next()" id="next" type="button" class="btn btn-primary">Next</button>
+                    <button onclick="last()" id="last" type="button" class="btn btn-primary">Last</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    </div>
+    </div>
 {% endblock %}

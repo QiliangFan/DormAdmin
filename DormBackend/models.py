@@ -26,6 +26,8 @@ class Teacher(models.Model):
 class Room(models.Model):
     room_id = models.CharField(max_length=32, null=True, default="")
     build = models.CharField(max_length=32, null=True, default="")
+    door_id = models.CharField(max_length=32, null=True, default="")
+    singleRoom_id = models.CharField(max_length=32, null=True, default="")
     capacity = models.IntegerField(default=0)   # 实际已住
 
 
@@ -41,7 +43,7 @@ class StuAccount(models.Model):
 
 
 class InspectionHistory(models.Model):
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateField(auto_now=True)
     room = models.ForeignKey("Room", on_delete=models.CASCADE)
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注

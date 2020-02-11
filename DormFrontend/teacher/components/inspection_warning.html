@@ -24,38 +24,29 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form method="post" action="/teacher/form_inspection_warning">
                                     <div class="row">
 
-                                        <div class="col-sm-4 row">
-                                            <label class="col-form-label col-4">宿舍楼</label>
-                                            <div class="col-8">
-                                                <select name="build" id="build" class="form-control">
 
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4 row">
-                                            <label class="col-form-label col-4">房间号</label>
-                                            <div class="col-8">
-                                                <input type="number" class="form-control" name="room_id">
-                                            </div>
-                                        </div>
+                                        {% include "../../templates/roominput_template.html" %}
 
-                                        <div class="col-sm-4 row">
+
+                                        <div class="col-sm-12 row">
                                             <label class="col-form-label col-4">警告</label>
                                             <div class="col-8">
                                                 <select name="warning" id="warning" class="form-control">
-
+                                                    <option>卫生状况一般</option>
+                                                    <option>卫生状况较差</option>
+                                                    <option>卫生状况亟待提高</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 2vh;">
                                         <div class="col-12">
-                                            <label for="validationTextarea">备注</label>
-                                            <textarea class="form-control " id="validationTextarea"
-                                                      placeholder="..." required></textarea>
+                                            <label for="comment">备注</label>
+                                            <textarea class="form-control " id="comment"
+                                                      name="comment" ></textarea>
                                         </div>
                                     </div>
                                     <div class="row form-group" style="margin-top: 2vh;">

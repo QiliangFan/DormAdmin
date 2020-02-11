@@ -81,9 +81,9 @@ function inspection_history_search() {
     var start_time = $("#start_time").val();
     var end_time = $("#start_time").val();
     var campus = $("#campus").val();
-    if (campus == "...") campus = ""
+    if (campus == "...") campus = "";
     var only_see = $("#only_see").val() ? $("#only_see").val() : "";
-    console.log(start_time, end_time, campus, only_see)
+    console.log(start_time, end_time, campus, only_see);
     window.location.href = "/teacher/inspection_history_search?start_time=" + start_time +
         "&end_time=" + end_time + "&campus=" + campus + "&only_see=" + only_see;
 }

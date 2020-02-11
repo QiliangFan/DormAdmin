@@ -24,7 +24,7 @@ def start_django():
 
 def start_eel():
     # 启动的函数调用放在最后,port=0表示使用随机端口,size=(宽,高)
-    eel.start('db.html', port=8001, size=(1024, 796))
+    eel.start('db.html', port=8001, size=(1024, 800))
 
 
 if __name__ == "__main__":
