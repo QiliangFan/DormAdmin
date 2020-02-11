@@ -17,41 +17,37 @@
     <li class="sidebar-list-item">
         <a href="/student_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>学生个人信息</span></a></li>
     <li class="sidebar-list-item">
-        <a href="/mate_info" class="sidebar-link text-muted active"><i class="o-database-1 mr-3 text-gray"></i><span>同宿人员信息</span></a></li>
+        <a href="/mate_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>同宿人员信息</span></a></li>
     <li class="sidebar-list-item">
         <a href="/clean_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>宿舍卫生情况</span></a></li>
     <li class="sidebar-list-item">
-        <a href="/warn_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>警告信息</span></a></li>
+        <a href="/warn_info" class="sidebar-link text-muted active"><i class="o-database-1 mr-3 text-gray"></i><span>警告信息</span></a></li>
 {% endblock %}
 {% block base %}
     <div class="col-lg-12 mb-5 pt-5">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="h6 text-uppercase mb-0">舍友信息</h3>
+                    <h3 class="h6 text-uppercase mb-0">警告信息</h3>
                   </div>
                   <div class="card-body">
                       <table class="table card-text">
                       <thead>
                       <tr>
                           <th>#</th>
-                          <th>学号</th>
-                          <th>姓名</th>
-                          <th>宿舍号</th>
-                          <th>电话</th>
-                          <th>学院</th>
-                          <th>导师</th>
+                          <th>发出者</th>
+                          <th>房间号</th>
+                          <th>等级</th>
+                          <th>留言</th>
                       </tr>
                       </thead>
                       <tbody>
-                      {% for i in mate %}
+                      {% for i in warn %}
                           <tr>
                           <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ i.stu_id }}</td>
-                            <td>{{ i.name }}</td>
-                            <td>{{ i.room.room_id }}</td>
-                            <td>{{ i.tel }}</td>
-                            <td>{{ i.college }}</td>
-                            <td>{{ i.tutor }}</td>
+                            <td>{{ i.sponsor.name }}</td>
+                            <td>{{ i.room.room_id  }}</td>
+                            <td>{{ i.level }}</td>
+                            <td>{{ i.comment }}</td>
                         </tr>
                       {% endfor %}
                       </tbody>

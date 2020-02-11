@@ -20,6 +20,8 @@
         <a href="/mate_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>同宿人员信息</span></a></li>
     <li class="sidebar-list-item">
         <a href="/clean_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>宿舍卫生情况</span></a></li>
+    <li class="sidebar-list-item">
+        <a href="/warn_info" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>警告信息</span></a></li>
 {% endblock %}
 {% block base %}
     <div class="col-lg-12 mb-5 pt-5">
@@ -33,27 +35,27 @@
                         <input type="text" value="{{ stu.stu_id }}" name="stu_id" style="display: none">
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">学号</label>
-                        <div class="form-control">{{ stu.stu_id }}</div>
+                          <input class="form-control" disabled="disabled" value="{{ stu.stu_id }}"/>
                       </div>
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">姓名</label>
-                        <div class="form-control">{{ stu.name }}</div>
+                          <input class="form-control" disabled="disabled" value="{{ stu.name }}"/>
                       </div>
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">宿舍号</label>
-                        <div class="form-control">{{ stu.room.room_id }}</div>
+                          <input class="form-control" disabled="disabled" value="{{ stu.room.room_id }}"/>
                       </div>
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">学院</label>
-                          <div class="form-control">{{ stu.college }}</div>
+                          <input class="form-control" disabled="disabled" value="{{ stu.college }}"/>
                       </div>
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">级别</label>
-                          <div class="form-control">{{ stu.detail }}</div>
+                          <input class="form-control" disabled="disabled" value="{{ stu.detail }}"/>
                       </div>
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">导师</label>
-                          <div class="form-control">{{ stu.tutor }}</div>
+                          <input class="form-control" disabled="disabled" value="{{ stu.tutor }}"/>
                       </div>
                       <div class="form-group">
                         <label class="form-control-label text-uppercase">电话</label>

@@ -58,3 +58,12 @@ def clean_info(request: HttpRequest):
 
 def stu_index(request: HttpRequest):
     return render(request, "StudentFronted/index.html", {})
+
+
+def warn_info(request: HttpRequest):
+    account = request.COOKIES["account"]
+    stu = models.Student.objects.filter(stu_id=account).first()
+    room = stu.room
+    warn = models.Warning.objects.filter(room=room)
+    context = {"warn": warn, "status": 'ok'}
+    return render(request, "StudentFronted/warning.html", context)
