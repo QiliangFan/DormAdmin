@@ -1,0 +1,54 @@
+{% extends "../templates/template.html" %}
+{% block base %}
+    <div class="col-lg-12 mb-5 pt-5">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="h6 text-uppercase mb-0">个人信息</h3>
+            </div>
+            <div class="card-body">
+                <form action="/teacher/modify_self_information" method="post">
+                    <input type="text" value="{{ tea.tea_id }}" name="tea_id" style="display: none">
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase">职工号</label>
+                        <input class="form-control disabled" value="{{ tea.tea_id }}" aria-disabled="true" disabled></input>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase">姓名</label>
+                        <input type="text" name="name" class="form-control" value="{{ tea.name }}"></input>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase" disabled>权限</label>
+                        <input class="form-control" disabled value="{% if '{{ tea.level }}' == '1' %}二级管理员{% endif %}{% if '{{ tea.level }} == "0' %}一级管理员{% endif %}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase disabled" aria-disabled="true" >学院</label>
+                        <input class="form-control" value="{{ tea.college }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase">电话</label>
+                        <input type="text" value="{{ tea.tel }}" class="form-control" name="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase">新密码</label>
+                        <input type="password"  class="form-control" name="pwd">
+                    </div>
+
+                    <div class="form-group row">
+                        <button type="submit" class="btn btn-primary" style="margin: auto">修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block side_bar %}
+    <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item"><a href="index" class="sidebar-link text-muted"><i
+                class="o-home-1 mr-3 text-gray"></i><span>主页</span></a></li>
+        <li class="sidebar-list-item"><a href="space" class="sidebar-link text-muted active"><i
+                class="o-database-1 mr-3 text-gray"></i><span>个人信息</span></a></li>
+    </ul>
+{% endblock %}
+<!--切换侧边栏颜色-->

@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="col-form-label">起始时间</label>
+                        <input id="start_time" class="form-control" type="date" value="2020-01-01">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="col-form-label">结束时间</label>
+                        <input id="" end_time class="form-control" type="date" value="2020-01-01">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="col-form-label">学院</label>
+                        <select id="campus" class="form-control">
+                            <option value="software">软件学院</option>
+                            <option value="biology">泰达生物技术研究院</option>
+                            <option value="physics">表达应用物理研究院</option>
+                            <option value="environment">环科学院</option>
+                            <option value="medicine">药学联合研究院</option>
+                            <option selected>...</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-top: 2vh;">
+                    <div class="form-group row col-4" style="margin: auto">
+                        <label for="only_see" class="col-form-label col-sm-4">只看</label>
+                        <div class="col-sm-8">
+                            <select id="only_see" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="margin-top: 2vh;" onclick="inspection_history_search()">查询</button>
+            </div>
+        </div>
+    </div>
+</div>
