@@ -20,6 +20,7 @@ urlpatterns = [
     , url(r'^import_second_level_manage_account$', import_second_level_manage_account)
     , url(r'^import_student_account$', import_student_account)
     , url(r'^reset_account$', reset_account)
+    , url(r'targetsearch_result$', targetsearch_result)
 
     # 表单路由
     , url(r"^form_add_inspection_history$", form_add_inspection_history)

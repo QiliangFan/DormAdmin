@@ -15,4 +15,5 @@ urlpatterns = [
     , url(r'^login$', login)
     , url(r'^logout$', logout)
     , url(r"^teacher/", include(tea_url))
+    , url(r'^warn_info$', sv.warn_info)
 ]

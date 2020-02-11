@@ -2,8 +2,45 @@ from django.db.models import Q
 from django.http import HttpRequest
 from django.shortcuts import render
 
-
 from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning
+
+
+
+def targetsearch_result(request: HttpRequest):
+    print(request.POST)
+    campus = request.POST["campus"]
+    build = request.POST["build"]
+    room_id = request.POST["room_id"]
+
+    room_list = Room.objects.all()
+
+    if (build != '1') and (build != '2') and (build != '3') and build != 'build':  # 4-7公寓
+        door_id = request.POST["door_id"]
+        singleRoom_id = request.POST["singleRoom_id"]
+        if door_id != 'door_id':
+            room_list = room_list.filter(Q(door_id=door_id))
+        if singleRoom_id != 'singleRoom_id':
+            room_list = room_list.filter(Q(singleRoom_id=singleRoom_id))
+
+    if build != 'build':
+        room_list = room_list.filter(Q(build=build))
+    if room_id != '':
+        room_list = room_list.filter(Q(room_id=room_id))
+
+    # print(room_list)
+    # for i in room_list:
+    #     print(i.room_id)
+
+    stu = Student.objects.all()
+    if campus != 'campus':
+        stu = stu.filter(college=campus)
+    stu = stu.filter(room__in=room_list)
+
+    # for i in stu:
+    #     print(i.stu_id)
+
+    context = {"stu": stu}
+    return render(request, "teacher/targetsearch_result.html", context)
 
 
 def index(request: HttpRequest):

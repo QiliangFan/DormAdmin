@@ -1,0 +1,64 @@
+<!--定向查询-->
+{% extends "../templates/template.html" %}
+{% block base %}
+    <div class="col-lg-12 mb-5 pt-5" style="padding-top: 2vh !important;">
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index">宿舍卫生</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dormmanage">学生住宿管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="targetsearch">定向查询</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="accountmanage">账号管理</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body" style="margin-top: 0;">
+                 <table class="table card-text">
+                      <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>学号</th>
+                          <th>姓名</th>
+                          <th>公寓</th>
+                          <th>门洞</th>
+                          <th>单间</th>
+                          <th>宿舍</th>
+                          <th>电话</th>
+                          <th>学院</th>
+                          <th>级别</th>
+                          <th>导师</th>
+                          <th>紧急</th>
+                          <th>地址</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in stu %}
+                          <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ i.stu_id }}</td>
+                            <td class="w-auto">{{ i.name }}</td>
+                            <td>{{ i.room.build }}</td>
+                            <td>{{ i.room.door_id }}</td>
+                            <td>{{ i.room.singleRoom_id }}</td>
+                            <td>{{ i.room.room_id }}</td>
+                            <td>{{ i.tel }}</td>
+                            <td>{{ i.college }}</td>
+                            <td>{{ i.detail }}</td>
+                            <td>{{ i.tutor }}</td>
+                            <td>{{ i.emergence_tel }}</td>
+                            <td>{{ i.home_address }}</td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
