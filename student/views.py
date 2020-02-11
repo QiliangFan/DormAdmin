@@ -50,3 +50,5 @@ def clean_info(request: HttpRequest):
     context = {"clean": clean, "status": 'ok'}
     return render(request, "StudentFronted/clean.html", context)
 
+
+

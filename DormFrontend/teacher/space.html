@@ -4,34 +4,34 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="h6 text-uppercase mb-0">个人信息</h3>
-                <small> 后三项可更改 </small>
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="/teacher/modify_self_information" method="post">
                     <input type="text" value="{{ tea.tea_id }}" name="tea_id" style="display: none">
                     <div class="form-group">
-                        <label class="form-control-label text-uppercase">职工</label>
-                        <div class="form-control">{{ tea.tea_id }}</div>
+                        <label class="form-control-label text-uppercase">职工号</label>
+                        <input class="form-control disabled" value="{{ tea.tea_id }}" aria-disabled="true" disabled></input>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label text-uppercase">姓名</label>
-                        <input type="text" class="form-control">{{ tea.name }}</input>
+                        <input type="text" name="name" class="form-control" value="{{ tea.name }}"></input>
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label text-uppercase">权限</label>
-                        <div class="form-control">{{ tea }}</div>
+                        <label class="form-control-label text-uppercase" disabled>权限</label>
+                        <input class="form-control" disabled value="{% if '{{ tea.level }}' == '1' %}二级管理员{% endif %}{% if '{{ tea.level }} == "0' %}一级管理员{% endif %}">
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label text-uppercase disabled" aria-disabled="true">学院</label>
-                        <div class="form-control">{{ tea.college }}</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label text-uppercase">级别</label>
-                        <div class="form-control">{{ tea.level }}</div>
+                        <label class="form-control-label text-uppercase disabled" aria-disabled="true" >学院</label>
+                        <input class="form-control" value="{{ tea.college }}" disabled>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label text-uppercase">电话</label>
                         <input type="text" value="{{ tea.tel }}" class="form-control" name="tel">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label text-uppercase">新密码</label>
+                        <input type="password"  class="form-control" name="pwd">
                     </div>
 
                     <div class="form-group row">

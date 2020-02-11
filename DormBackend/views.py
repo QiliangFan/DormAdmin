@@ -40,7 +40,8 @@ def login(request: HttpRequest):
             if _pwd == password:
                 obj = redirect("/teacher/index")
                 obj.set_cookie("account", account)
-                obj.set_cookie("is_login", True, 3000)  # 登录cookie有效时间300秒
+                obj.set_cookie("is_login", True)
+                obj.set_cookie("level", tea.tea_id)
                 return obj
     except Exception:
         Log.i(__name__, account + "账号错误, 登录失败...")

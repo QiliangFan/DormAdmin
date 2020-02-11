@@ -47,3 +47,10 @@ class InspectionHistory(models.Model):
     room = models.ForeignKey("Room", on_delete=models.CASCADE)
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注
+
+
+class Warning(models.Model):
+    sponsor = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True)
+    room = models.ForeignKey("Room", on_delete=models.CASCADE, null=True)
+    level = models.CharField(max_length=32, null=True, default="")
+    comment = models.CharField(max_length=512, null=True, default="")
