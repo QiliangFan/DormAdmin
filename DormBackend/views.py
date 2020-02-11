@@ -1,5 +1,6 @@
 import json
 import sys
+import traceback
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
@@ -41,9 +42,9 @@ def login(request: HttpRequest):
                 obj = redirect("/teacher/index")
                 obj.set_cookie("account", account)
                 obj.set_cookie("is_login", True)
-                obj.set_cookie("level", tea.tea_id)
                 return obj
     except Exception:
+        traceback.print_exc()
         Log.i(__name__, account + "账号错误, 登录失败...")
         return render(request, "index.html", {"status": "account_error"})
     finally:

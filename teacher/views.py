@@ -25,11 +25,47 @@ def targetsearch(request: HttpRequest):
 
 
 def inspection_history(request: HttpRequest):
-    return render(request, "teacher/components/inspection_history.html", {})
+    cookie = request.COOKIES
+    account = cookie["account"]
+    level = cookie["level"]
+
+    tea = Teacher.objects.filter(tea_id=account).first()
+    data = {
+        "college": tea.college,
+        "level": level
+    }
+    print("data:", data)
+    return render(request, "teacher/components/inspection_history.html", data)
 
 
 def inspection_history_search(request: HttpRequest):
     print(request.GET.dict())
+    print(request.COOKIES)
+    data = request.GET.dict()
+    cookie = request.COOKIES
+
+    level = cookie["level"]
+    account = cookie["account"]
+
+    start_time = data["start_time"]
+    end_time = data["end_time"]
+    campus = data["campus"]
+    only_see = data["only_see"]
+    if only_see == "全部" or only_see == "":
+        only_see = ""
+
+    if level == "0":        # 一级管理员
+        if campus != "":  # 对学院进行筛选
+            if only_see != "": # 对detail进行筛选
+                pass
+            else:   # 对进行detail筛选
+                pass
+        else:             # 不对学院进行筛选
+            
+    else:                   # 二级管理员
+        tea = Teacher.objects.filter(tea_id=account).first()
+        college = tea.college
+
     return render(request, "teacher/table/inspection_history_table.html", {})
 
 

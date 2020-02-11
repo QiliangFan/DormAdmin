@@ -45,7 +45,7 @@ if __name__ == "__main__":
         Log.e(__name__, "数据库配置错误, django启动失败")
         sys.exit(0)
     
-    sleep(0.5)
+    sleep(2)
     Log.i(__name__, "开始尝试启动EEL")
     eel_t = threading.Thread(target=start_eel)
     eel_t.start()

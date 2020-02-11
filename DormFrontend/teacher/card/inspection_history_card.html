@@ -13,30 +13,57 @@
                     </div>
                     <div class="col-sm-4">
                         <label class="col-form-label">学院</label>
+
                         <select id="campus" class="form-control">
-                            <option value="software">软件学院</option>
-                            <option value="biology">泰达生物技术研究院</option>
-                            <option value="physics">表达应用物理研究院</option>
-                            <option value="environment">环科学院</option>
-                            <option value="medicine">药学联合研究院</option>
-                            <option selected>...</option>
+
+                            {% ifequal  level   "0" %}
+                                <option value="software">软件学院</option>
+                                <option value="biology">泰达生物技术研究院</option>
+                                <option value="physics">泰达应用物理研究院</option>
+                                <option value="environment">环科学院</option>
+                                <option value="medicine">药学联合研究院</option>
+                                <option selected>...</option>
+                            {% endifequal %}
+
+                            {% ifequal level "1" %}
+
+                                {% if '软件学院' == "软件学院" %}
+                                    <option value="software">软件学院</option>
+                                    <option selected>...</option>
+                                {% elif  college  == "泰达生物技术研究院" %}
+                                    <option value="biology">泰达生物技术研究院</option>
+                                    <option selected>...</option>
+                                {% elif college == "泰达应用物理研究院" %}
+                                    <option value="physics">泰达应用物理研究院</option>
+                                    <option selected>...</option>
+                                {% elif college == "环科学院" %}
+                                    <option value="environment">环科学院</option>
+                                    <option selected>...</option>
+                                {% elif college == "药学联合研究院" %}
+                                    <option value="medicine">药学联合研究院</option>
+                                    <option selected>...</option>
+                                {% endif %}
+
+                            {% endifequal %}
+                        </select>
+
+                    </div>
+            </div>
+
+
+            <div class="row" style="margin-top: 2vh;">
+                <div class="form-group row col-4" style="margin: auto">
+                    <label for="only_see" class="col-form-label col-sm-4">只看</label>
+                    <div class="col-sm-8">
+                        <select id="only_see" class="form-control">
                         </select>
                     </div>
                 </div>
-
-
-                <div class="row" style="margin-top: 2vh;">
-                    <div class="form-group row col-4" style="margin: auto">
-                        <label for="only_see" class="col-form-label col-sm-4">只看</label>
-                        <div class="col-sm-8">
-                            <select id="only_see" class="form-control">
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" style="margin-top: 2vh;" onclick="inspection_history_search()">查询</button>
             </div>
+
+            <button class="btn btn-primary" style="margin-top: 2vh;" onclick="inspection_history_search()">查询
+            </button>
         </div>
     </div>
+</div>
 </div>
