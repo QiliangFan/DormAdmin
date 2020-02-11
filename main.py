@@ -49,7 +49,6 @@ if __name__ == "__main__":
     Log.i(__name__, "开始尝试启动EEL")
     eel_t = threading.Thread(target=start_eel)
     eel_t.start()
-    eel_t.setDaemon(False)
     Log.i(__name__, "EEL启动成功")
     eel_t.join()
 

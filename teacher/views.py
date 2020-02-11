@@ -5,7 +5,6 @@ from django.shortcuts import render
 from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning
 
 
-
 def targetsearch_result(request: HttpRequest):
     print(request.POST)
     campus = request.POST["campus"]

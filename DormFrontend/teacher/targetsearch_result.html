@@ -20,44 +20,95 @@
                 </ul>
             </div>
             <div class="card-body" style="margin-top: 0;">
-                 <table class="table card-text">
-                      <thead>
-                      <tr>
-                          <th>#</th>
-                          <th>学号</th>
-                          <th>姓名</th>
-                          <th>公寓</th>
-                          <th>门洞</th>
-                          <th>单间</th>
-                          <th>宿舍</th>
-                          <th>电话</th>
-                          <th>学院</th>
-                          <th>级别</th>
-                          <th>导师</th>
-                          <th>紧急</th>
-                          <th>地址</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      {% for i in stu %}
-                          <tr>
-                          <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ i.stu_id }}</td>
-                            <td class="w-auto">{{ i.name }}</td>
-                            <td>{{ i.room.build }}</td>
-                            <td>{{ i.room.door_id }}</td>
-                            <td>{{ i.room.singleRoom_id }}</td>
-                            <td>{{ i.room.room_id }}</td>
-                            <td>{{ i.tel }}</td>
-                            <td>{{ i.college }}</td>
-                            <td>{{ i.detail }}</td>
-                            <td>{{ i.tutor }}</td>
-                            <td>{{ i.emergence_tel }}</td>
-                            <td>{{ i.home_address }}</td>
-                        </tr>
-                      {% endfor %}
-                      </tbody>
-                    </table>
+                <table class="table card-text">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>公寓</th>
+                        <th>门洞</th>
+                        <th>单间</th>
+                        <th>宿舍</th>
+                        <th>电话</th>
+                        <th>学院</th>
+                        <th>级别</th>
+                        <th>导师</th>
+                        <th>紧急</th>
+                        <th>地址</th>
+                    </tr>
+                    </thead>
+                    <tbody id="divide_page_table">
+                    <script>
+                        var temp_list = [];
+                        {% for item in stu %}
+                            temp_list.push({
+                                "stu_id": "{{ item.stu_id }} ",
+                                "name": "{{ item.name }} ",
+                                "build": "{% if item.room.build %}{{ item.room.build }}{% else %} {% endif %}",
+                                "door_id": "{% if item.room.door_id %}{{ item.room.door_id }}{% else %} {% endif %}",
+                                "singleRoom_id": "{% if item.room.singleRoom_id %}{{ item.room.singleRoom_id }}{% else %} {% endif %}",
+                                "room_id": "{% if item.room_id %}{{ item.room_id }}{% else %} {% endif %}",
+                                "tel": "{% if item.tel %}{{ item.tel }}{% else %} {% endif %}",
+                                "college": "{% if item.tel %}{{ item.tel }}{% else %} {% endif %}",
+                                "detail": "{% if item.detail %}{{ item.detail }}{% else %} {% endif %}",
+                                "tutor": "{% if item.tutor %}{{ item.tutor.name }}{% else %} {% endif %}",
+                                "emergence_tel":  "{% if item.emergence_tel %}{{ item.emergence_tel }}{% else %} {% endif %}",
+                                "home_address": "{% if item.home_address %}{{ item.home_address }}{% else %} {% endif %}",
+                            });
+                        {% endfor %}
+                        $(function () {
+                            init(temp_list, 10);
+                            console.log(item_list);
+
+                            refresh();
+                        });
+
+                        function refresh() {
+                            $("#divide_page_table").empty();
+                            console.log(item_list);
+                            console.log("start:", start_offset);
+                            console.log("end:", end_offset);
+                            for (let i = start_offset; i <= end_offset; i++) {
+                                let item = item_list[i];
+                                console.log("<tr><th scope='row'>" + (i - start_offset) + "</th>" +
+                                    "<td>" + item.stu_id + "</td>" +
+                                    "<td class=\"w-auto\">" + item.name + "</td>" +
+                                    "<td>" + item.build + "</td>" +
+                                    "<td>" + item.door_id + "</td>" +
+                                    "<td>" + item.singleRoom_id + "</td>" +
+                                    "<td>" + item.room_id + "</td>" +
+                                    "<td>" + item.tel + "</td>" +
+                                    "<td>" + item.college + "</td>" +
+                                    "<td>" + item.detail + "</td>" +
+                                    "<td>" + item.tutor + "</td>" +
+                                    "<td>" + item.emergence_tel + "</td>" +
+                                    "<td>" + item.home_address + "</td><tr>")
+    console.log("<tr><th scope='row'>" + (i - start_offset) + "</th>" )
+                                $("#divide_page_table").append("<tr><th scope='row'>" + (i - start_offset) + "</th>" +
+                                    "<td>" + item.stu_id + "</td>" +
+                                    "<td class=\"w-auto\">" + item.name + "</td>" +
+                                    "<td>" + item.build + "</td>" +
+                                    "<td>" + item.door_id + "</td>" +
+                                    "<td>" + item.singleRoom_id + "</td>" +
+                                    "<td>" + item.room_id + "</td>" +
+                                    "<td>" + item.tel + "</td>" +
+                                    "<td>" + item.college + "</td>" +
+                                    "<td>" + item.detail + "</td>" +
+                                    "<td>" + item.tutor + "</td>" +
+                                    "<td>" + item.emergence_tel + "</td>" +
+                                    "<td>" + item.home_address + "</td></tr>");
+                            }
+                        }
+                    </script>
+                    </tbody>
+                </table>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button onclick="first()" id="first" type="button" class="btn btn-primary">First</button>
+                    <button onclick="previous()" id="previous" type="button" class="btn btn-primary">Previous</button>
+                    <button onclick="next()" id="next" type="button" class="btn btn-primary">Next</button>
+                    <button onclick="last()" id="last" type="button" class="btn btn-primary">Last</button>
+                </div>
             </div>
         </div>
     </div>

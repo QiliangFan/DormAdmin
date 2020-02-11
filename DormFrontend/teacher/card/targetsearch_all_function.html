@@ -1,8 +1,8 @@
 <div class="row">
     <form style="width: 100%" action="targetsearch_result" method="post">
-        <div class="form-group row">
-            <label for="campus" class="col-sm-2 col-form-label">学院</label>
-            <div class="col-sm-10">
+        <div class="form-group row col-sm-12">
+            <label for="campus" class="col-sm-4 col-form-label">学院</label>
+            <div class="col-sm-8">
                 <select id="campus" name="campus" class="form-control">
                     <option value="软件学院">软件学院</option>
                     <option value="物理学院">物理学院</option>
@@ -13,54 +13,8 @@
                 </select>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">宿舍楼</label>
-            <div class="col-sm-10">
-                <select id="build" name="build" class="form-control">
-                    <option value="1">1公寓</option>
-                    <option value="2">2公寓</option>
-                    <option value="3">3公寓</option>
-                    <option value="4">4公寓</option>
-                    <option value="5">5公寓</option>
-                    <option value="6">6公寓</option>
-                    <option value="7">7公寓</option>
-                    <option value="build" selected>...</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="campus" class="col-sm-2 col-form-label">门洞</label>
-            <div class="col-sm-10">
-                <select id="door_id" name="door_id" class="form-control" disabled="disabled">
-                    <option value="1">1门</option>
-                    <option value="2">2门</option>
-                    <option value="3">3门</option>
-                    <option value="4">4门</option>
-                    <option value="5">5门</option>
-                    <option value="door_id" selected>...</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="form-group row">
-            <label for="campus" class="col-sm-2 col-form-label">单间号</label>
-            <div class="col-sm-10">
-                <select id="singleRoom_id" name="singleRoom_id" class="form-control" disabled="disabled">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="singleRoom_id" selected>...</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">房间号</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="room_id" name="room_id">
-            </div>
-        </div>
+        {% include "../../templates/roominput_template.html" %}
 
         <div class="form-group row">
             <div class="col-sm-12">
