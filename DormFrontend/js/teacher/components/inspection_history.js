@@ -68,18 +68,33 @@ $(function () {
                 }
                 break;
             }
+<<<<<<< HEAD
+=======
+            default: {
+                $("#only_see").empty()
+            }
+>>>>>>> cee5337a235e66cf8aaca935dfe1fde970de9f4a
         }
     })
 
 
 })
 
+<<<<<<< HEAD
 function inspection_history_search(){
     var start_time = $("#start_time").val();
     var end_time = $("#start_time").val();
     var campus = $("#campus").val();
     if(campus == "...") campus = ""
     var only_see = $("#only_see").val() ? $("#only_see").val() :"";
+=======
+function inspection_history_search() {
+    var start_time = $("#start_time").val();
+    var end_time = $("#start_time").val();
+    var campus = $("#campus").val();
+    if (campus == "...") campus = ""
+    var only_see = $("#only_see").val() ? $("#only_see").val() : "";
+>>>>>>> cee5337a235e66cf8aaca935dfe1fde970de9f4a
     console.log(start_time, end_time, campus, only_see)
     window.location.href = "/teacher/inspection_history_search?start_time=" + start_time +
         "&end_time=" + end_time + "&campus=" + campus + "&only_see=" + only_see;
