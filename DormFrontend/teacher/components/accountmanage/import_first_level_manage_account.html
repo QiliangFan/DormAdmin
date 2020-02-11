@@ -1,0 +1,86 @@
+<!--导入一级账号-->
+{% extends "../../../templates/template.html" %}
+{% block base %}
+    <div class="col-lg-12 mb-5 pt-5" style="padding-top: 2vh !important;">
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index">宿舍卫生</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dormmanage">学生住宿管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="targetsearch">定向查询</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="accountmanage">账号管理</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body" style="margin-top: 0;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group row">
+                                        <label for="id" class="col-control-label col-sm-2">职工号</label>
+                                        <div class="col-sm-10">
+                                        <input type="number" id="id" name="id" class="form-control"
+                                               placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="campus" class="col-control-label col-sm-2">学院</label>
+                                        <div class="col-sm-10">
+                                            <select id="campus" name="campus" class="form-control">
+                                                <option value="software">软件学院</option>
+                                                <option value="biology">泰达生物技术研究院</option>
+                                                <option value="physics">表达应用物理研究院</option>
+                                                <option value="environment">环科学院</option>
+                                                <option value="medicine">药学联合研究院</option>
+                                                <option selected>...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-form-label col-sm-2">姓名</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="name" id="name">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" style="margin: auto">导入</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 2vh;">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form-inline" method="post" enctype="multipart/form-data">
+                                    <div class="form-group mb-2">
+                                        <label for="file"
+                                               class="col-form-label sr-only">从文件导入名单</label>
+                                        <input type="text" class="form-control-plaintext" value="从文件导入名单">
+                                    </div>
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <input type="file" class="form-control form-control-file" id="file"
+                                               name="file">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">上传</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+<!--宿舍卫生检查记录-->
+{% extends "../../templates/template.html" %}
+{% block base %}
+    <div class="col-lg-12 mb-5 pt-5" style="padding-top: 2vh !important;">
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index">宿舍卫生</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dormmanage">学生住宿管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="targetsearch">定向查询</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="accountmanage">账号管理</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body" style="margin-top: 0;">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="row">
+
+                                        <div class="col-sm-4 row">
+                                            <label class="col-form-label col-4">宿舍楼</label>
+                                            <div class="col-8">
+                                                <select name="build" id="build" class="form-control">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 row">
+                                            <label class="col-form-label col-4">房间号</label>
+                                            <div class="col-8">
+                                                <input type="number" class="form-control" name="room_id">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4 row">
+                                            <label class="col-form-label col-4">警告</label>
+                                            <div class="col-8">
+                                                <select name="warning" id="warning" class="form-control">
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 2vh;">
+                                        <div class="col-12">
+                                            <label for="validationTextarea">备注</label>
+                                            <textarea class="form-control " id="validationTextarea"
+                                                      placeholder="..." required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group" style="margin-top: 2vh;">
+                                        <button type="submit" style="margin:auto" class="btn-primary btn">发送</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

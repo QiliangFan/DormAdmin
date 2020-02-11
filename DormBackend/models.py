@@ -10,7 +10,7 @@ class Student(models.Model):
     tel = models.CharField(max_length=16, null=True, default="")
     tutor = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True)
     college = models.CharField(max_length=32, null=True, default="")  # 学院
-    detail = models.CharField(max_length=32, null=True, default="")  # 专业
+    detail = models.CharField(max_length=32, null=True, default="")  # 具体信息
     room = models.ForeignKey("Room", on_delete=models.SET_NULL, null=True)
     home_address = models.TextField(null=True, default="")
     name = models.CharField(max_length=32, null=True, default="")
@@ -24,15 +24,15 @@ class Teacher(models.Model):
 
 
 class Room(models.Model):
-    room_id = models.CharField(max_length=32, null=True, default="")  # 宿舍号
-    build = models.CharField(max_length=32, null=True, default="")  # 楼号
-    capacity = models.IntegerField(default=0)  # 实际已住人员数量
+    room_id = models.CharField(max_length=32, null=True, default="")
+    build = models.CharField(max_length=32, null=True, default="")
+    capacity = models.IntegerField(default=0)   # 实际已住
 
 
 class ManagerAccount(models.Model):
     account_name = models.ForeignKey("Teacher", on_delete=models.CASCADE)
     pwd = models.CharField(max_length=32, default="123456")
-    level = models.IntegerField(default="1")
+    level = models.IntegerField( default="1")
 
 
 class StuAccount(models.Model):
@@ -48,3 +48,9 @@ class InspectionHistory(models.Model):
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注
 
+
+class Warning(models.Model):
+    sponsor = models.ForeignKey("Teacher", on_delete=models.SET_NULL, null=True)
+    room = models.ForeignKey("Room", on_delete=models.CASCADE, null=True)
+    level = models.CharField(max_length=32, null=True, default="")
+    comment = models.CharField(max_length=512, null=True, default="")
