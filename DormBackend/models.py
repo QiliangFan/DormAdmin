@@ -41,9 +41,7 @@ class StuAccount(models.Model):
 
 
 class InspectionHistory(models.Model):
-    year = models.IntegerField(default=2020)
-    month = models.IntegerField(default=1)
-    day = models.IntegerField(default=1)
+    date = models.DateTimeField(auto_now=True)
     room = models.ForeignKey("Room", on_delete=models.CASCADE)
     result = models.CharField(max_length=32, null=True, default="")  # 检查结果
     comment = models.CharField(max_length=32, null=True, default="")  # 备注

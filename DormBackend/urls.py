@@ -11,6 +11,7 @@ urlpatterns = [
     , url(r'^change_stu_info$', sv.change_stu_info)
     , url(r'^mate_info$', sv.mate_info)
     , url(r'^clean_info$', sv.clean_info)
+    , url(r"^stu_index$", sv.stu_index)
     , url(r'^login$', login)
     , url(r'^logout$', logout)
     , url(r"^teacher/", include(tea_url))

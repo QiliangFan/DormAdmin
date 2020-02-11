@@ -51,4 +51,5 @@ def clean_info(request: HttpRequest):
     return render(request, "StudentFronted/clean.html", context)
 
 
-
+def stu_index(request: HttpRequest):
+    return render(request, "StudentFronted/index.html", {})

@@ -19,19 +19,20 @@ def index(request: HttpRequest):
 
 def login(request: HttpRequest):
     data = request.POST.dict()
+    print(data)
     account = data["account"]
     password = data["password"]
     user_type = data["type"]
     Log.i(__name__, account + "尝试登录...")
     try:
-        if type == "student":       # 学生登录
+        if user_type == "student":       # 学生登录
             stu = Student.objects.filter(stu_id=account).first()
             _account = StuAccount.objects.filter(account_name_id=stu.id).first()
             _pwd = _account.pwd
             if _pwd == password:    # 密码正确
-                obj = redirect("/student/index")
+                obj = redirect("/stu_index")
                 obj.set_cookie("account", account)
-                obj.set_cookie("is_login", True, 300)  # 登录cookie有效时间300秒
+                obj.set_cookie("is_login", True)
                 return obj
 
         else:                       # 教师登录
@@ -42,6 +43,7 @@ def login(request: HttpRequest):
                 obj = redirect("/teacher/index")
                 obj.set_cookie("account", account)
                 obj.set_cookie("is_login", True)
+                obj.set_cookie("level", _account.level)
                 return obj
     except Exception:
         traceback.print_exc()

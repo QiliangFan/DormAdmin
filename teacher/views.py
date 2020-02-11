@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from DormBackend.models import Teacher, ManagerAccount
+from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student
 
 
 def index(request: HttpRequest):
@@ -54,19 +54,38 @@ def inspection_history_search(request: HttpRequest):
     if only_see == "全部" or only_see == "":
         only_see = ""
 
-    if level == "0":        # 一级管理员
-        if campus != "":  # 对学院进行筛选
-            if only_see != "": # 对detail进行筛选
-                pass
-            else:   # 对进行detail筛选
-                pass
-        else:             # 不对学院进行筛选
-            
-    else:                   # 二级管理员
-        tea = Teacher.objects.filter(tea_id=account).first()
-        college = tea.college
+    if campus != "":  # 对学院进行筛选
+        if only_see != "":  # 对detail进行筛选
+            stu_list = Student.objects.filter(Q(campus=campus)&Q(detail=only_see))
+            room_list = []
+            room_id_list = []
+            for stu_item in stu_list:
+                room_list.append(stu_item.room)
+                room_id_list.append(stu_item.room.id)
+            result = InspectionHistory.objects.filter(Q(date__gt=start_time)&Q(date__lt=end_time)&Q(room_id__in=room_id_list))
+            result = list(result)
+        else:  # 不对进行detail筛选
+            stu_list = Student.objects.filter(Q(campus=campus))
+            room_list = []
+            room_id_list = []
+            for stu_item in stu_list:
+                room_list.append(stu_item.room)
+                room_id_list.append(stu_item.room.id)
+            result = InspectionHistory.objects.filter(
+                Q(date__gt=start_time) & Q(date__lt=end_time) & Q(room_id__in=room_id_list))
+            result = list(result)
+    else:  # 不对学院进行筛选
+        stu_list = Student.objects.all()
+        room_list = []
+        room_id_list = []
+        for stu_item in stu_list:
+            room_list.append(stu_item.room)
+            room_id_list.append(stu_item.room.id)
+        result = InspectionHistory.objects.filter(
+            Q(date__gt=start_time) & Q(date__lt=end_time) & Q(room_id__in=room_id_list))
+        result = list(result)
 
-    return render(request, "teacher/table/inspection_history_table.html", {})
+    return render(request, "teacher/table/inspection_history_table.html", {"history": result})
 
 
 def inspection_warning(request: HttpRequest):
