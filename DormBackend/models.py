@@ -26,6 +26,8 @@ class Teacher(models.Model):
 class Room(models.Model):
     room_id = models.CharField(max_length=32, null=True, default="")
     build = models.CharField(max_length=32, null=True, default="")
+    door_id = models.CharField(max_length=32, null=True,default="")
+    singleRoom_id = models.CharField(max_length=32, null=True,default="")
     capacity = models.IntegerField(default=0)   # 实际已住
 
 
