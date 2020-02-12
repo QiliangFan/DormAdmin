@@ -15,15 +15,15 @@ def targetsearch_result(request: HttpRequest):
 
     room_list = Room.objects.all()
 
-    if (build != '1') and (build != '2') and (build != '3') and build != 'build':  # 4-7公寓
+    if (build != '1') and (build != '2') and (build != '3') and (build != ''):  # 4-7公寓
         door_id = request.POST["door_id"]
         singleRoom_id = request.POST["singleRoom_id"]
-        if door_id != 'door_id':
+        if door_id != '':
             room_list = room_list.filter(Q(door_id=door_id))
-        if singleRoom_id != 'singleRoom_id':
+        if singleRoom_id != '':
             room_list = room_list.filter(Q(singleRoom_id=singleRoom_id))
 
-    if build != 'build':
+    if build != '':
         room_list = room_list.filter(Q(build=build))
     if room_id != '':
         room_list = room_list.filter(Q(room_id=room_id))
@@ -33,7 +33,7 @@ def targetsearch_result(request: HttpRequest):
     #     print(i.room_id)
 
     stu = Student.objects.all()
-    if campus != 'campus':
+    if campus != '':
         stu = stu.filter(college=campus)
     stu = stu.filter(room__in=room_list)
 
@@ -154,7 +154,7 @@ def modify_self_information(request: HttpRequest):
     tea.tel = tel
     tea.save()
     if len(pwd) > 0:  # 提供了新密码
-        ManagerAccount.objects.filter(account_name=tea_id).update(pwd=pwd)
+        ManagerAccount.objects.filter(account_name=tea).update(pwd=pwd)
     return render(request, "teacher/space.html", {"status": "success", "tea": tea})
 
 
@@ -233,7 +233,8 @@ def form_inspection_warnings(request: HttpRequest):
         w.room_id = room.id
         w.comment = comment
         w.level = warning
-        w.sponsor = account
+        tea = Teacher.objects.filter(tea_id=account).first()
+        w.sponsor_id = tea.id
         w.save()
     except AttributeError:
         print_exc()
@@ -300,15 +301,16 @@ def file_manage_bed(request: HttpRequest):
 def form_delete_account(request: HttpRequest):
     data = request.POST.dict()
     cookie = request.COOKIES
+    id = data['id']
     print(data)
     print(cookie)
     stu = Student.objects.filter(Q(stu_id=id)).first()
     tea = Teacher.objects.filter(Q(tea_id=id)).first()
     if stu:  # 删除学生信息和账号
-        StuAccount.objects.filter(Q(account_name=stu.stu_id)).delete()
+        StuAccount.objects.filter(Q(account_name=stu.stu)).delete()
         stu.delete()
     elif tea:
-        ManagerAccount.objects.filter(Q(account_name=tea.tea_id)).delete()
+        ManagerAccount.objects.filter(Q(account_name=tea.tea)).delete()
         tea.delete()
     else:
         return render(request, "teacher/components/accountmanage/delete_account.html", {"status": "id_not_found"})
@@ -417,11 +419,13 @@ def form_reset_account(request: HttpRequest):
     id = data["id"]
     not_found = 0
     try:
-        ManagerAccount.objects.filter(Q(account_name=id)).update(pwd="123456")
+        tea = Teacher.objects.filter(tea_id=id)
+        ManagerAccount.objects.filter(Q(account_name=tea)).update(pwd="123456")
     except :
         not_found += 1
     try:
-        StuAccount.objects.filter(account_name=id).update(pwd="123456")
+        stu = Student.objects.filter(stu_id=id)
+        StuAccount.objects.filter(account_name=stu).update(pwd="123456")
     except :
         not_found += 1
 

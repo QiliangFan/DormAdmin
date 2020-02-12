@@ -26,6 +26,12 @@ def change_stu_info(request: HttpRequest):
         stu.emergence_tel = request.POST["emergence_tel"]
         stu.home_address = request.POST["home_address"]
         stu.save()
+
+        pwd = request.POST['pwd']
+        if len(pwd) > 0:  # 提供了新密码
+            print(pwd)
+            models.StuAccount.objects.filter(account_name=stu).update(pwd=pwd)
+
         context = {"stu": stu, "info_fun_name": 'student_info', "status": 'ok'}
         return render(request, "StudentFronted/space.html", context)
     except Exception as e:
