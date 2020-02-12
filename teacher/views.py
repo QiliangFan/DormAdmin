@@ -8,7 +8,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning, StuAccount
 from PROPATH import PROJECT
-from teacher.utils import update_dorm, import_student, import_teacher, delete_all_account, reset_all_account
+from teacher.utils import update_dorm, import_student, import_teacher, delete_all_account, reset_all_account, \
+    add_inspection, manage_bed_util
 
 
 def targetsearch_result(request: HttpRequest):
@@ -157,7 +158,7 @@ def modify_self_information(request: HttpRequest):
     name = data["name"]
     tel = data["tel"]
     pwd = data["pwd"]
-    tea = Teacher.objects.filter(Q(tea_id=tea_id) & Q(name=name)).first()
+    tea = Teacher.objects.filter(Q(tea_id=tea_id)).first()
     tea.name = name
     tea.tel = tel
     tea.save()
@@ -216,7 +217,23 @@ def form_add_inspection_history(request: HttpRequest):
 
 
 def file_add_inspection_history(request: HttpRequest):
-    return render(request, "teacher/components/add_inspection_history.html", {})
+    try:
+        file_obj = request.FILES["file"]
+        print(file_obj.name)
+        file_name: str = file_obj.name
+        print(os.path.splitext(file_name))
+        sufix = os.path.splitext(file_name)[1]
+        if file_name.endswith("xls") or file_name.endswith(".xlsx"):
+            with open(PROJECT + "teacher/files/inspection" + sufix, "wb+") as fp:
+                fp.write(file_obj.read())
+            file_name = PROJECT + "teacher/files/inspection" + sufix
+            add_inspection(file_name)
+        else:
+            return render(request, "teacher/components/accountmanage/delete_account.html", {})
+    except :
+        print_exc()
+        return render(request, "teacher/components/accountmanage/delete_account.html", {})
+    return render(request, "teacher/components/add_inspection_history.html", {"status": "ok"})
 
 
 def form_inspection_warnings(request: HttpRequest):
@@ -259,7 +276,7 @@ def form_del_dorm_information(request: HttpRequest):
         stu.room.capacity -= 1
         stu.room.save()
         stu.room_id = ""
-        stu.save()
+        stu.delete()
     except AttributeError:
         print_exc()
         return render(request, "teacher/components/del_dorm_information.html", {"status": "stu_not_found"})
@@ -268,7 +285,23 @@ def form_del_dorm_information(request: HttpRequest):
 
 
 def file_del_dorm_information(request: HttpRequest):
-    return render(request, "teacher/components/del_dorm_information.html", {})
+    try:
+        file_obj = request.FILES["file"]
+        print(file_obj.name)
+        file_name: str = file_obj.name
+        print(os.path.splitext(file_name))
+        sufix = os.path.splitext(file_name)[1]
+        if file_name.endswith("xls") or file_name.endswith(".xlsx"):
+            with open(PROJECT + "teacher/files/account" + sufix, "wb+") as fp:
+                fp.write(file_obj.read())
+            file_name = PROJECT + "teacher/files/account" + sufix
+            delete_all_account(file_name)
+        else:
+            return render(request, "teacher/components/del_dorm_information.html", {})
+    except :
+        print_exc()
+        return render(request, "teacher/components/del_dorm_information.html", {})
+    return render(request, "teacher/components/del_dorm_information.html", {"status":'ok'})
 
 
 def form_manage_bed(request: HttpRequest):
@@ -305,7 +338,23 @@ def form_manage_bed(request: HttpRequest):
 
 
 def file_manage_bed(request: HttpRequest):
-    return render(request, "teacher/components/manage_bed.html", {})
+    try:
+        file_obj = request.FILES["file"]
+        print(file_obj.name)
+        file_name: str = file_obj.name
+        print(os.path.splitext(file_name))
+        sufix = os.path.splitext(file_name)[1]
+        if file_name.endswith("xls") or file_name.endswith(".xlsx"):
+            with open(PROJECT + "teacher/files/manage_bed" + sufix, "wb+") as fp:
+                fp.write(file_obj.read())
+            file_name = PROJECT + "teacher/files/manage_bed" + sufix
+            manage_bed_util(file_name)
+        else:
+            return render(request, "teacher/components/manage_bed.html", {})
+    except :
+        print_exc()
+        return render(request, "teacher/components/manage_bed.html", {})
+    return render(request, "teacher/components/manage_bed.html", {"status": "ok"})
 
 
 def form_delete_account(request: HttpRequest):
@@ -454,12 +503,12 @@ def file_delete_account(request: HttpRequest):
         print(os.path.splitext(file_name))
         sufix = os.path.splitext(file_name)[1]
         if file_name.endswith("xls") or file_name.endswith(".xlsx"):
-            with open(PROJECT + "teacher/files/teacher" + sufix, "wb+") as fp:
+            with open(PROJECT + "teacher/files/account" + sufix, "wb+") as fp:
                 fp.write(file_obj.read())
             file_name = PROJECT + "teacher/files/account" + sufix
             delete_all_account(file_name)
         else:
-            return render(request, "teacher/components/accountmanage/delete_account.html", {"status":'error'})
+            return render(request, "teacher/components/accountmanage/delete_account.html", {})
     except :
         print_exc()
         return render(request, "teacher/components/accountmanage/delete_account.html", {})
@@ -479,7 +528,7 @@ def file_import_first_level_manage_account(request: HttpRequest):
             file_name = PROJECT + "teacher/files/student" + sufix
             import_teacher(file_name, "0")
         else:
-            return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {"status": "error"})
+            return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {})
     except :
         print_exc()
         return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {})
@@ -499,7 +548,7 @@ def file_import_second_level_manage_account(request: HttpRequest):
             file_name = PROJECT + "teacher/files/student" + sufix
             import_teacher(file_name, "1")
         else:
-            return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {"status": "error"})
+            return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", )
     except :
         print_exc()
         return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {})
@@ -519,7 +568,7 @@ def file_import_student_account(request: HttpRequest):
             file_name = PROJECT + "teacher/files/student" + sufix
             import_student(file_name)
         else:
-            return render(request, "teacher/components/accountmanage/import_student_account.html", {"status":"error"})
+            return render(request, "teacher/components/accountmanage/import_student_account.html", {})
     except :
         print_exc()
         return render(request, "teacher/components/accountmanage/import_student_account.html", {})
@@ -534,13 +583,14 @@ def file_reset_account(request: HttpRequest):
         print(os.path.splitext(file_name))
         sufix = os.path.splitext(file_name)[1]
         if file_name.endswith("xls") or file_name.endswith(".xlsx"):
-            with open(PROJECT + "teacher/files/student" + sufix, "wb+") as fp:
+            with open(PROJECT + "teacher/files/reset" + sufix, "wb+") as fp:
                 fp.write(file_obj.read())
             file_name = PROJECT + "teacher/files/reset" + sufix
             reset_all_account(file_name)
         else:
-            return render(request, "teacher/components/accountmanage/reset_account.html", {"status":"error"})
+            return render(request, "teacher/components/accountmanage/reset_account.html", {})
     except :
+        print_exc()
         return render(request, "teacher/components/accountmanage/reset_account.html", {})
     return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "ok"})
 
