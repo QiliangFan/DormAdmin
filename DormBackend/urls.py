@@ -19,4 +19,4 @@ urlpatterns = [
 ]
 
 
-handler500 = server_error
+handler500 = index

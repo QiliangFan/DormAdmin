@@ -40,5 +40,4 @@ urlpatterns = [
     , url(r'^file_import_student_account$', file_import_student_account)
     , url(r'^form_reset_account$', form_reset_account)
     , url(r'^file_reset_account$', file_reset_account)
-
 ]

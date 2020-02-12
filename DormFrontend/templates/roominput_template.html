@@ -9,13 +9,13 @@
     <label class="col-form-label col-4">宿舍楼</label>
     <div class="col-8">
         <select name="build" id="build" class="form-control">
-            <option value="1号公寓">1号公寓</option>
-            <option value="2号公寓">2号公寓</option>
-            <option value="3号公寓">3号公寓</option>
-            <option value="4号公寓">4号公寓</option>
-            <option value="5号公寓">5号公寓</option>
-            <option value="6号公寓">6号公寓</option>
-            <option value="7号公寓">7号公寓</option>
+            <option value="1">1号公寓</option>
+            <option value="2">2号公寓</option>
+            <option value="3">3号公寓</option>
+            <option value="4">4号公寓</option>
+            <option value="5">5号公寓</option>
+            <option value="6">6号公寓</option>
+            <option value="7">7号公寓</option>
             <option>...</option>
         </select>
     </div>
@@ -25,27 +25,27 @@
     $(function () {
         $("#build").change(function () {
             switch ($("#build").val()) {
-                case "1号公寓": {
+                case "1": {
 
                 }
-                case "2号公寓": {
+                case "2": {
 
                 }
-                case "3号公寓": {
+                case "3": {
                     $("#div_door").hide()
                     $("#div_singleRoom").hide()
                     break;
                 }
-                case "4号公寓": {
+                case "4": {
 
                 }
-                case "5号公寓": {
+                case "5": {
 
                 }
-                case "6号公寓": {
+                case "6": {
 
                 }
-                case "7号公寓": {
+                case "7": {
                     $("#div_door").show();
                     $("#div_singleRoom").show();
                 }
@@ -58,11 +58,11 @@
     <label class="col-form-label col-4">门洞号</label>
     <div class="col-8">
         <select name="door_id" id="door_id" class="form-control">
-            <option value="1门">1门</option>
-            <option value="2门">2门</option>
-            <option value="3门">3门</option>
-            <option value="4门">4门</option>
-            <option value="5门">5门</option>
+            <option value="1">1门</option>
+            <option value="2">2门</option>
+            <option value="3">3门</option>
+            <option value="4">4门</option>
+            <option value="5">5门</option>
             <option value="" selected>...</option>
         </select>
     </div>
@@ -70,7 +70,13 @@
 <div id="div_singleRoom" class="col-sm-12 row" style="display:none;">
     <label class="col-form-label col-4">单间号</label>
     <div class="col-8">
-        <input type="number" id="singleRoom_id" name="singleRoom_id" class="form-control">
+        <select id="singleRoom_id" name="singleRoom_id" class="form-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="" selected></option>
+        </select>
     </div>
 </div>
 
