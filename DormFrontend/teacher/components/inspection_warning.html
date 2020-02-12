@@ -43,16 +43,24 @@
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 2vh;">
-                                        <div class="col-12">
-                                            <label for="comment">备注</label>
-                                            <textarea class="form-control " id="comment"
-                                                      name="comment" ></textarea>
+                                        <div class="col-12 row">
+                                            <label for="comment" class="col-form-label col-4">备注</label>
+                                            <textarea class="form-control col-8" id="comment"
+                                                      name="comment"></textarea>
                                         </div>
                                     </div>
                                     <div class="row form-group" style="margin-top: 2vh;">
                                         <button type="submit" style="margin:auto" class="btn-primary btn">发送</button>
                                     </div>
                                 </form>
+                                {% if status == "room_not_found" %}
+                                    <span id="error" style="color: red;font-size: 5px;">目标宿舍不存在</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $("#error").hide()
+                                        }, 5000)
+                                    </script>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

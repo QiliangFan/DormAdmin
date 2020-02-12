@@ -3,8 +3,7 @@ import sys
 import traceback
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpRequest
-
+from django.http import HttpResponse, HttpRequest, JsonResponse
 
 # Create your views here.
 
@@ -58,3 +57,10 @@ def logout(request: HttpRequest):
     obj = redirect("/index")
     obj.set_cookie("is_login", "false")
     return obj
+
+
+def server_error(request: HttpRequest):
+    return JsonResponse({
+        "status": "后台出现错误",
+        "advice": "重新启动程序"
+    })

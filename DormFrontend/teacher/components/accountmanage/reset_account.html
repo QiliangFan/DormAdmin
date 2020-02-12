@@ -35,6 +35,14 @@
                                                placeholder="学号/职工号" name="id">
                                     </div>
                                     <button type="submit" class="btn btn-primary mb-2">重置密码</button>
+                                    {% if status == "id_not_found" %}
+                                        <span id="error" style="color: red;font-size: 5px;">目标id不存在</span>
+                                        <script>
+                                            setTimeout(function () {
+                                                $("#error").hide()
+                                            }, 3000)
+                                        </script>
+                                    {% endif %}
                                 </form>
                             </div>
                         </div>
@@ -45,7 +53,8 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="/teacher/file_reset_account" class="form-inline" method="post" enctype="multipart/form-data">
+                                <form action="/teacher/file_reset_account" class="form-inline" method="post"
+                                      enctype="multipart/form-data">
                                     <div class="form-group mb-2">
                                         <label for="file"
                                                class="col-form-label sr-only">从文件导入名单</label>

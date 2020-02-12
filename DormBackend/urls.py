@@ -17,3 +17,6 @@ urlpatterns = [
     , url(r"^teacher/", include(tea_url))
     , url(r'^warn_info$', sv.warn_info)
 ]
+
+
+handler500 = server_error

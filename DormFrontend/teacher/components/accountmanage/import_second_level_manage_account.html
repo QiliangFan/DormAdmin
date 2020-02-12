@@ -24,18 +24,18 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="/teacher/form_import_second_level_manage" method="post">
+                                <form action="/teacher/form_import_second_level_manage_account" method="post">
                                     <div class="form-group row">
                                         <label for="id" class="col-control-label col-sm-2">职工号</label>
                                         <div class="col-sm-10">
-                                        <input type="number" id="id" name="id" class="form-control"
-                                               placeholder="">
+                                            <input type="number" id="id" name="id" class="form-control"
+                                                   placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="campus" class="col-control-label col-sm-2">学院</label>
+                                        <label for="college" class="col-control-label col-sm-2">学院</label>
                                         <div class="col-sm-10">
-                                            <select id="campus" name="campus" class="form-control">
+                                            <select id="college" name="college" class="form-control">
                                                 <option value="software">软件学院</option>
                                                 <option value="biology">泰达生物技术研究院</option>
                                                 <option value="physics">表达应用物理研究院</option>
@@ -51,8 +51,45 @@
                                             <input type="text" class="form-control" name="name" id="name">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary" style="margin: auto">导入</button>
+                                    <button id="import" type="submit" class="btn btn-primary" style="margin: auto">导入</button>
+                                    <script>
+                                        $("#import").click(function () {
+                                            if ($("#id").val() == "") {
+                                                $("#id_error").show()
+                                                setTimeout(function () {
+                                                    $("#id_error").hide();
+                                                }, 2000);
+                                                return false;
+                                            } else if ($("#college").val() == "..." || $("#college").val() == "") {
+                                                $("#college_error").show()
+                                                setTimeout(function () {
+                                                    $("#college_error").hide();
+                                                }, 2000);
+                                                return false;
+
+                                            } else if ($("#name").val() == "") {
+                                                $("#name_error").show();
+                                                setTimeout(function () {
+                                                    $("#name_error").hide();
+                                                }, 2000)
+                                                return false;
+                                            }
+                                            return true;
+                                        })
+                                    </script>
                                 </form>
+                                <span id="id_error" style="color: red;font-size: 5px;display: none;">id不应为空</span>
+                                <span id="college_error" style="color: red;font-size: 5px;display: none;">学院不应为空</span>
+                                <span id="name_error" style="color: red;font-size: 5px;display: none;">名字不应为空</span>
+
+                                {% if status == "id_exist" %}
+                                    <span id="error" style="color: red;font-size: 5px;">目标职工号已经存在</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $("#error").hide()
+                                        }, 5000)
+                                    </script>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -62,7 +99,8 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="/teacher/file_import_second_level_manage_account" class="form-inline" method="post" enctype="multipart/form-data">
+                                <form action="/teacher/file_import_second_level_manage_account" class="form-inline"
+                                      method="post" enctype="multipart/form-data">
                                     <div class="form-group mb-2">
                                         <label for="file"
                                                class="col-form-label sr-only">从文件导入名单</label>
@@ -76,6 +114,7 @@
                                         <button type="submit" class="btn btn-primary">上传</button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>

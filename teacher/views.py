@@ -1,8 +1,10 @@
+from traceback import print_exc
+
 from django.db.models import Q
 from django.http import HttpRequest
 from django.shortcuts import render
 
-from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning
+from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning, StuAccount
 
 
 def targetsearch_result(request: HttpRequest):
@@ -190,14 +192,19 @@ def form_add_inspection_history(request: HttpRequest):
     singleRoom_id = data["singleRoom_id"]
     room_id = data["room_id"]
     result = data["result"]
-    commment = data["cooment"]
+    commment = data["comment"]
     ih = InspectionHistory()
-    room = Room.objects.filter(Q(build=build)&Q(door_id=door_id)&Q(singleRoom_id=singleRoom_id)&Q(room_id=room_id)).first()
-    ih.room_id = room.id
+    room = Room.objects.filter(
+        Q(build=build) & Q(door_id=door_id) & Q(singleRoom_id=singleRoom_id) & Q(room_id=room_id)).first()
+    try:
+        ih.room_id = room.id
+    except AttributeError:
+        print_exc()
+        return render(request, "teacher/components/add_inspection_history.html", {"status": "room_not_found"})
     ih.comment = commment
     ih.result = result
     ih.save()
-    return render(request, "teacher/components/add_inspection_history.html", {})
+    return render(request, "teacher/components/add_inspection_history.html", {"status": "ok"})
 
 
 def file_add_inspection_history(request: HttpRequest):
@@ -217,17 +224,21 @@ def form_inspection_warnings(request: HttpRequest):
     room_id = data["room_id"]
     warning = data["warning"]
     comment = data["comment"]
-    room = Room.objects.filter(Q(build=build)&
-                               Q(door_id=door_id)&
-                               Q(singleRoom_id=singleRoom_id)&
+    room = Room.objects.filter(Q(build=build) &
+                               Q(door_id=door_id) &
+                               Q(singleRoom_id=singleRoom_id) &
                                Q(room_id=room_id)).first()
     w = Warning()
-    w.room_id = room.id
-    w.comment = comment
-    w.level = warning
-    w.sponsor = account
-    w.save()
-    return render(request, "teacher/components/inspection_warning.html", {})
+    try:
+        w.room_id = room.id
+        w.comment = comment
+        w.level = warning
+        w.sponsor = account
+        w.save()
+    except AttributeError:
+        print_exc()
+        return render(request, "teacher/components/inspection_warning.html", {"status": "room_not_found"})
+    return render(request, "teacher/components/inspection_warning.html", {"status": "ok"})
 
 
 def form_del_dorm_information(request: HttpRequest):
@@ -235,11 +246,16 @@ def form_del_dorm_information(request: HttpRequest):
     print(data)
     id = data["id"]
     stu = Student.objects.filter(Q(stu_id=id)).first()
-    stu.room.capacity -= 1
-    stu.room.save()
-    stu.room_id = ""
-    stu.save()
-    return render(request, "teacher/components/del_dorm_information.html", {})
+    try:
+        stu.room.capacity -= 1
+        stu.room.save()
+        stu.room_id = ""
+        stu.save()
+    except AttributeError:
+        print_exc()
+        return render(request, "teacher/components/del_dorm_information.html", {"status": "stu_not_found"})
+
+    return render(request, "teacher/components/del_dorm_information.html", {"status": "ok"})
 
 
 def file_del_dorm_information(request: HttpRequest):
@@ -247,7 +263,34 @@ def file_del_dorm_information(request: HttpRequest):
 
 
 def form_manage_bed(request: HttpRequest):
-    return render(request, "teacher/components/manage_bed.html", {})
+    data = request.POST.dict()
+    cookie = request.COOKIES
+    print(data)
+    print(cookie)
+    stu_id = data["stu_id"]
+    build = data["build"]
+    door_id = data["door_id"]
+    singleRoom_id = data["singleRoom_id"]
+    room_id = data["room_id"]
+
+    stu = Student.objects.filter(Q(stu_id=stu_id)).first()
+    try:
+        stu_room = stu.room
+    except AttributeError:
+        print_exc()
+        return render(request, "teacher/components/manage_bed.html", {"status": "stu_not_found"})
+
+    try:
+        dst_room = Room.objects.filter(
+            Q(build=build) & Q(door_id=door_id) & Q(singleRoom_id=singleRoom_id) & Q(room_id=room_id)).first()
+        print("房间id:", dst_room.id)
+        stu.room = dst_room
+        stu.save()
+    except AttributeError:
+        print_exc()
+        return render(request, "teacher/components/manage_bed.html", {"status": "room_not_found"})
+
+    return render(request, "teacher/components/manage_bed.html", {"status": "ok"})
 
 
 def file_manage_bed(request: HttpRequest):
@@ -255,23 +298,137 @@ def file_manage_bed(request: HttpRequest):
 
 
 def form_delete_account(request: HttpRequest):
-    return render(request, "teacher/components/accountmanage/delete_account.html", {})
+    data = request.POST.dict()
+    cookie = request.COOKIES
+    print(data)
+    print(cookie)
+    stu = Student.objects.filter(Q(stu_id=id)).first()
+    tea = Teacher.objects.filter(Q(tea_id=id)).first()
+    if stu:  # 删除学生信息和账号
+        StuAccount.objects.filter(Q(account_name=stu.stu_id)).delete()
+        stu.delete()
+    elif tea:
+        ManagerAccount.objects.filter(Q(account_name=tea.tea_id)).delete()
+        tea.delete()
+    else:
+        return render(request, "teacher/components/accountmanage/delete_account.html", {"status": "id_not_found"})
+    return render(request, "teacher/components/accountmanage/delete_account.html", {"status": "ok"})
 
 
 def form_import_first_level_manage_account(request: HttpRequest):
-    return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {})
+    data = request.POST.dict()
+    cookie = request.COOKIES
+    print(data)
+    print(cookie)
+    id = data["id"]
+    college = data["college"]
+    if college == "...": campus = ""
+    name = data["name"]
+    try:
+        teacher = Teacher.objects.filter(Q(tea_id=id)).first()
+        if teacher:
+            return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html",
+                          {"status": "id_exist"})
+        teacher = Teacher()
+        teacher.tea_id = id
+        teacher.college = college
+        teacher.name = name
+        account = ManagerAccount()
+        account.account_name = id
+        account.pwd = "123456"
+        account.level = '0'
+        teacher.save()
+        account.save()
+    except:
+        print_exc()
+        pass
+    return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {"status": "ok"})
 
 
 def form_import_second_level_manage_account(request: HttpRequest):
-    return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {})
+    data = request.POST.dict()
+    cookie = request.COOKIES
+    print(data)
+    print(cookie)
+    id = data["id"]
+    college = data["college"]
+    if college == "...": college = ""
+    name = data["name"]
+    try:
+        teacher = Teacher.objects.filter(Q(tea_id=id)).first()
+        if teacher:
+            return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html",
+                          {"status": "id_exist"})
+        teacher = Teacher()
+        teacher.tea_id = id
+        teacher.college = college
+        teacher.name = name
+        account = ManagerAccount()
+        account.account_name = id
+        account.pwd = "123456"
+        account.level = '0'
+        teacher.save()
+        account.save()
+    except:
+        print_exc()
+        pass
+    return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {"status": "ok"})
 
 
 def form_import_student_account(request: HttpRequest):
+    data = request.POST.dict()
+    cookie = request.COOKIES
+    print(data)
+    print(cookie)
+    level = cookie["level"]
+
+    id = data["id"]
+    college = data["college"]
+    if college == "...": college = ""
+    name = data["name"]
+    try:
+        student = Student.objects.filter(Q(stu_id=id)).first()
+        if student:
+            return render(request, "teacher/components/accountmanage/import_student_account.html",
+                          {"status": "id_exist"})
+        student = Student()
+        student.stu_id = id
+        student.college = college
+        student.name = name
+        account = StuAccount()
+        account.account_name = id
+        account.pwd = "123456"
+        student.save()
+        account.save()
+    except:
+        print_exc()
+        pass
     return render(request, "teacher/components/accountmanage/import_student_account.html", {})
 
 
 def form_reset_account(request: HttpRequest):
-    return render(request, "teacher/components/accountmanage/reset_account.html", {})
+    data = request.POST.dict()
+    cookie = request.COOKIES
+    print(data)
+    print(cookie)
+    level = cookie["level"]
+    if level == "1":
+        return render(request, "teacher/components/accountmanage/reset_account.html", {})
+    id = data["id"]
+    not_found = 0
+    try:
+        ManagerAccount.objects.filter(Q(account_name=id)).update(pwd="123456")
+    except :
+        not_found += 1
+    try:
+        StuAccount.objects.filter(account_name=id).update(pwd="123456")
+    except :
+        not_found += 1
+
+    print("not_found:" , not_found)
+    if not_found == 2:
+        return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "id_not_found"})
+    return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "ok"})
 
 
 def file_delete_account(request: HttpRequest):
