@@ -19,15 +19,15 @@ def targetsearch_result(request: HttpRequest):
 
     room_list = Room.objects.all()
 
-    if (build != '1') and (build != '2') and (build != '3') and build != 'build':  # 4-7公寓
+    if (build != '1') and (build != '2') and (build != '3') and (build != ''):  # 4-7公寓
         door_id = request.POST["door_id"]
         singleRoom_id = request.POST["singleRoom_id"]
-        if door_id != 'door_id':
+        if door_id != '':
             room_list = room_list.filter(Q(door_id=door_id))
-        if singleRoom_id != 'singleRoom_id':
+        if singleRoom_id != '':
             room_list = room_list.filter(Q(singleRoom_id=singleRoom_id))
 
-    if build != 'build':
+    if build != '':
         room_list = room_list.filter(Q(build=build))
     if room_id != '':
         room_list = room_list.filter(Q(room_id=room_id))
@@ -37,7 +37,7 @@ def targetsearch_result(request: HttpRequest):
     #     print(i.room_id)
 
     stu = Student.objects.all()
-    if campus != 'campus':
+    if campus != '':
         stu = stu.filter(college=campus)
     stu = stu.filter(room__in=room_list)
 
@@ -49,8 +49,10 @@ def targetsearch_result(request: HttpRequest):
 
 
 def index(request: HttpRequest):            # remember this for dorm data
+    """
+    第一次在新服务器上运行此后台, 请务必取消注释, 从而生成宿舍信息
+    """
     # update_dorm(PROJECT + "teacher/files/dorm.json")
-    # import_student(PROJECT + "teacher/student.xlsx")
     return render(request, "teacher/index.html", {})
 
 
@@ -239,7 +241,6 @@ def form_inspection_warnings(request: HttpRequest):
         w.room_id = room.id
         w.comment = comment
         w.level = warning
-
         tea = Teacher.objects.filter(tea_id=account).first()
         w.sponsor_id = tea.id
         w.save()
@@ -310,6 +311,7 @@ def file_manage_bed(request: HttpRequest):
 def form_delete_account(request: HttpRequest):
     data = request.POST.dict()
     cookie = request.COOKIES
+    id = data['id']
     print(data)
     print(cookie)
     try:

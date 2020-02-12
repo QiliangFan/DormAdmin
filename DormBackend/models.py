@@ -22,6 +22,7 @@ class Teacher(models.Model):
     college = models.CharField(max_length=32, null=True, default="")
     tel = models.CharField(max_length=16, null=True, default="")
 
+
 class Room(models.Model):
     room_id = models.CharField(max_length=32, null=True, default="")
     build = models.CharField(max_length=32, null=True, default="")
