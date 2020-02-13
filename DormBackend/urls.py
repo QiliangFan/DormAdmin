@@ -7,6 +7,7 @@ from teacher import urls as tea_url
 
 urlpatterns = [
     url(r'^index$', index)
+    , url(r'^$', index)
     , url(r'^student_info$', sv.student_info)
     , url(r'^change_stu_info$', sv.change_stu_info)
     , url(r'^mate_info$', sv.mate_info)
