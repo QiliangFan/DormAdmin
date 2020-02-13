@@ -4,11 +4,10 @@ from traceback import print_exc
 from django.db.models import Q
 from django.http import HttpRequest
 from django.shortcuts import render
-from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning, StuAccount
 from PROPATH import PROJECT
-from teacher.utils import update_dorm, import_student, import_teacher, delete_all_account, reset_all_account, \
+from teacher.utils import import_student, import_teacher, delete_all_account, reset_all_account, \
     add_inspection, manage_bed_util
 
 
@@ -45,11 +44,11 @@ def targetsearch_result(request: HttpRequest):
     # for i in stu:
     #     print(i.stu_id)
 
-    context = {"stu": stu}
+    context = {"stu": stu, "status": "ok"}
     return render(request, "teacher/targetsearch_result.html", context)
 
 
-def index(request: HttpRequest):            # remember this for dorm data
+def index(request: HttpRequest):  # remember this for dorm data
     """
     第一次在新服务器上运行此后台, 请务必取消注释, 从而生成宿舍信息
     """
@@ -230,10 +229,10 @@ def file_add_inspection_history(request: HttpRequest):
             add_inspection(file_name)
         else:
             return render(request, "teacher/components/accountmanage/delete_account.html", {})
-    except :
+    except:
         print_exc()
         return render(request, "teacher/components/accountmanage/delete_account.html", {})
-    return render(request, "teacher/components/add_inspection_history.html", {"status": "ok"})
+    return render(request, "teacher/components/add_inspection_history.html", {"status": "file_ok"})
 
 
 def form_inspection_warnings(request: HttpRequest):
@@ -298,10 +297,10 @@ def file_del_dorm_information(request: HttpRequest):
             delete_all_account(file_name)
         else:
             return render(request, "teacher/components/del_dorm_information.html", {})
-    except :
+    except:
         print_exc()
-        return render(request, "teacher/components/del_dorm_information.html", {})
-    return render(request, "teacher/components/del_dorm_information.html", {"status":'ok'})
+        return render(request, "teacher/components/del_dorm_information.html", {"status": "error"})
+    return render(request, "teacher/components/del_dorm_information.html", {"status": 'file_ok'})
 
 
 def form_manage_bed(request: HttpRequest):
@@ -351,10 +350,10 @@ def file_manage_bed(request: HttpRequest):
             manage_bed_util(file_name)
         else:
             return render(request, "teacher/components/manage_bed.html", {})
-    except :
+    except:
         print_exc()
-        return render(request, "teacher/components/manage_bed.html", {})
-    return render(request, "teacher/components/manage_bed.html", {"status": "ok"})
+        return render(request, "teacher/components/manage_bed.html", {"sattus": "ok"})
+    return render(request, "teacher/components/manage_bed.html", {"status": "file_ok"})
 
 
 def form_delete_account(request: HttpRequest):
@@ -396,14 +395,16 @@ def form_import_first_level_manage_account(request: HttpRequest):
         teacher.college = college
         teacher.name = name
         account = ManagerAccount()
-        account.account_name = id
+        teacher.save()
+        account.account_name = teacher
         account.pwd = "123456"
         account.level = '0'
-        teacher.save()
         account.save()
     except:
         print_exc()
-        pass
+        return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html",
+                      {"status": "error"})
+
     return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {"status": "ok"})
 
 
@@ -426,14 +427,16 @@ def form_import_second_level_manage_account(request: HttpRequest):
         teacher.college = college
         teacher.name = name
         account = ManagerAccount()
-        account.account_name = id
+        teacher.save()
+        account.account_name = teacher
         account.pwd = "123456"
         account.level = '0'
-        teacher.save()
         account.save()
     except:
         print_exc()
-        pass
+        return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html",
+                      {"status": "error"})
+
     return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {"status": "ok"})
 
 
@@ -458,14 +461,14 @@ def form_import_student_account(request: HttpRequest):
         student.college = college
         student.name = name
         account = StuAccount()
-        account.account_name = id
-        account.pwd = "123456"
         student.save()
+        account.account_name = student
+        account.pwd = "123456"
         account.save()
     except:
         print_exc()
-        pass
-    return render(request, "teacher/components/accountmanage/import_student_account.html", {})
+        return render(request, "teacher/components/accountmanage/import_student_account.html", {"status": "error"})
+    return render(request, "teacher/components/accountmanage/import_student_account.html", {"status": "ok"})
 
 
 def form_reset_account(request: HttpRequest):
@@ -481,15 +484,15 @@ def form_reset_account(request: HttpRequest):
     try:
         tea = Teacher.objects.filter(tea_id=id).first()
         ManagerAccount.objects.filter(Q(account_name=tea)).update(pwd="123456")
-    except :
+    except:
         not_found += 1
     try:
         stu = Student.objects.filter(stu_id=id).first()
         StuAccount.objects.filter(account_name=stu).update(pwd="123456")
-    except :
+    except:
         not_found += 1
 
-    print("not_found:" , not_found)
+    print("not_found:", not_found)
     if not_found == 2:
         return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "id_not_found"})
     return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "ok"})
@@ -509,10 +512,10 @@ def file_delete_account(request: HttpRequest):
             delete_all_account(file_name)
         else:
             return render(request, "teacher/components/accountmanage/delete_account.html", {})
-    except :
+    except:
         print_exc()
         return render(request, "teacher/components/accountmanage/delete_account.html", {})
-    return render(request, "teacher/components/accountmanage/delete_account.html", {"status":'ok'})
+    return render(request, "teacher/components/accountmanage/delete_account.html", {"status": 'file_ok'})
 
 
 def file_import_first_level_manage_account(request: HttpRequest):
@@ -525,14 +528,15 @@ def file_import_first_level_manage_account(request: HttpRequest):
         if file_name.endswith("xls") or file_name.endswith(".xlsx"):
             with open(PROJECT + "teacher/files/teacher" + sufix, "wb+") as fp:
                 fp.write(file_obj.read())
-            file_name = PROJECT + "teacher/files/student" + sufix
+            file_name = PROJECT + "teacher/files/teacher" + sufix
             import_teacher(file_name, "0")
         else:
             return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {})
-    except :
+    except:
         print_exc()
         return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {})
-    return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html", {"status":"ok"})
+    return render(request, "teacher/components/accountmanage/import_first_level_manage_account.html",
+                  {"status": "file_ok"})
 
 
 def file_import_second_level_manage_account(request: HttpRequest):
@@ -545,21 +549,22 @@ def file_import_second_level_manage_account(request: HttpRequest):
         if file_name.endswith("xls") or file_name.endswith(".xlsx"):
             with open(PROJECT + "teacher/files/teacher" + sufix, "wb+") as fp:
                 fp.write(file_obj.read())
-            file_name = PROJECT + "teacher/files/student" + sufix
+            file_name = PROJECT + "teacher/files/teacher" + sufix
             import_teacher(file_name, "1")
         else:
             return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", )
-    except :
+    except:
         print_exc()
         return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {})
-    return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html", {"status":"ok"})
+    return render(request, "teacher/components/accountmanage/import_second_level_manage_account.html",
+                  {"status": "file_ok"})
 
 
 def file_import_student_account(request: HttpRequest):
     try:
         file_obj = request.FILES["file"]
         print(file_obj.name)
-        file_name:str = file_obj.name
+        file_name: str = file_obj.name
         print(os.path.splitext(file_name))
         sufix = os.path.splitext(file_name)[1]
         if file_name.endswith("xls") or file_name.endswith(".xlsx"):
@@ -569,17 +574,17 @@ def file_import_student_account(request: HttpRequest):
             import_student(file_name)
         else:
             return render(request, "teacher/components/accountmanage/import_student_account.html", {})
-    except :
+    except:
         print_exc()
         return render(request, "teacher/components/accountmanage/import_student_account.html", {})
-    return render(request, "teacher/components/accountmanage/import_student_account.html", {"status": "ok"})
+    return render(request, "teacher/components/accountmanage/import_student_account.html", {"status": "file_ok"})
 
 
 def file_reset_account(request: HttpRequest):
     try:
         file_obj = request.FILES["file"]
         print(file_obj.name)
-        file_name:str = file_obj.name
+        file_name: str = file_obj.name
         print(os.path.splitext(file_name))
         sufix = os.path.splitext(file_name)[1]
         if file_name.endswith("xls") or file_name.endswith(".xlsx"):
@@ -589,8 +594,7 @@ def file_reset_account(request: HttpRequest):
             reset_all_account(file_name)
         else:
             return render(request, "teacher/components/accountmanage/reset_account.html", {})
-    except :
+    except:
         print_exc()
         return render(request, "teacher/components/accountmanage/reset_account.html", {})
-    return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "ok"})
-
+    return render(request, "teacher/components/accountmanage/reset_account.html", {"status": "file_ok"})

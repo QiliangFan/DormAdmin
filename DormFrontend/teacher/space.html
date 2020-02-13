@@ -10,7 +10,8 @@
                     <input type="text" value="{{ tea.tea_id }}" name="tea_id" style="display: none">
                     <div class="form-group">
                         <label class="form-control-label text-uppercase">职工号</label>
-                        <input class="form-control disabled" value="{{ tea.tea_id }}" aria-disabled="true" disabled></input>
+                        <input class="form-control disabled" value="{{ tea.tea_id }}" aria-disabled="true"
+                               disabled></input>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label text-uppercase">姓名</label>
@@ -18,10 +19,11 @@
                     </div>
                     <div class="form-group">
                         <label class="form-control-label text-uppercase" disabled>权限</label>
-                        <input class="form-control" disabled value="{% if '{{ tea.level }}' == '1' %}二级管理员{% endif %}{% if '{{ tea.level }} == "0' %}一级管理员{% endif %}">
+                        <input class="form-control" disabled
+                               value="{% if '{{ tea.level }}' == '1' %}二级管理员{% endif %}{% if '{{ tea.level }} == "0' %}一级管理员{% endif %}">
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label text-uppercase disabled" aria-disabled="true" >学院</label>
+                        <label class="form-control-label text-uppercase disabled" aria-disabled="true">学院</label>
                         <input class="form-control" value="{{ tea.college }}" disabled>
                     </div>
                     <div class="form-group">
@@ -31,13 +33,22 @@
 
                     <div class="form-group">
                         <label class="form-control-label text-uppercase">新密码</label>
-                        <input type="password"  class="form-control" name="pwd">
+                        <input type="password" class="form-control" name="pwd">
                     </div>
 
                     <div class="form-group row">
                         <button type="submit" class="btn btn-primary" style="margin: auto">修改</button>
                     </div>
                 </form>
+                {% if status == "ok" %}
+                    <span id="ok"
+                          style="color: red;font-size: 5px;">操作成功</span>
+                    <script>
+                        setTimeout(function () {
+                            $("#ok").hide()
+                        }, 5000)
+                    </script>
+                {% endif %}
             </div>
         </div>
     </div>

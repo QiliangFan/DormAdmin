@@ -245,6 +245,7 @@ def read_excel_teacher(filename:str, level:str):
         print(ws.ncols)
         for c in range(ws.ncols):
             col_list: list = ws.col(c)
+            print(col_list)
 
             try:
                 while col_list[0].value == "":
@@ -258,6 +259,7 @@ def read_excel_teacher(filename:str, level:str):
                 elif col_list[0].value.startswith("电话"):
                     tel_list = [item.value for item in col_list[1:]]
             except:
+                print_exc()
                 continue
 
         print("tea_id_list:", len(tea_id_list))
@@ -298,6 +300,7 @@ def read_excel_teacher(filename:str, level:str):
                 account.level = level
                 account.save()
             except:
+                print_exc()
                 continue
 
 

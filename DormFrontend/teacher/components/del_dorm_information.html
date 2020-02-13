@@ -48,6 +48,15 @@
                                                         }, 5000)
                                                     </script>
                                                 {% endif %}
+                                                {% if status == "ok" %}
+                                                    <span id="ok"
+                                                          style="color: red;font-size: 5px;">操作成功</span>
+                                                    <script>
+                                                        setTimeout(function () {
+                                                            $("#ok").hide()
+                                                        }, 5000)
+                                                    </script>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +82,7 @@
                                                     <div class="form-group">
                                                         <button type="submit" class="btn btn-primary">上传</button>
                                                     </div>
-                                                    {% if status == "ok" %}
+                                                    {% if status == "file_ok" %}
                                                         <span id="ok"
                                                               style="color: red;font-size: 5px;">操作成功</span>
                                                         <script>
