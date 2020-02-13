@@ -37,6 +37,7 @@ def targetsearch_result(request: HttpRequest):
     #     print(i.room_id)
 
     stu = Student.objects.all()
+
     if campus != '':
         stu = stu.filter(college=campus)
     stu = stu.filter(room__in=room_list)
