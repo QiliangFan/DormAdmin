@@ -211,7 +211,7 @@ def read_excel_student_reset(filename:str):
         print("room_list:", len(room_list))
         print("college_list:", len(college_list))
 
-        lastroom = room
+        lastroom = ""
         for i in range(max(len(stu_id_list), len(stu_name_list), len(room_list), len(college_list))):
             try:
                 stu_id = stu_id_list[i].strip()
