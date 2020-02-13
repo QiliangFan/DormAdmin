@@ -41,7 +41,7 @@
                                                     </button>
                                                 </form>
                                                 {% if status == "stu_not_found" %}
-                                                    <span id="error" style="color: red;font-size: 5px;">目标学生不存在</span>
+                                                    <span id="error" style="color: red;font-size: 0.8vw;">目标学生不存在</span>
                                                     <script>
                                                         setTimeout(function () {
                                                             $("#error").hide()
@@ -50,7 +50,7 @@
                                                 {% endif %}
                                                 {% if status == "ok" %}
                                                     <span id="ok"
-                                                          style="color: red;font-size: 5px;">操作成功</span>
+                                                          style="color: red;font-size: 0.8vw;">操作成功</span>
                                                     <script>
                                                         setTimeout(function () {
                                                             $("#ok").hide()
@@ -84,7 +84,7 @@
                                                     </div>
                                                     {% if status == "file_ok" %}
                                                         <span id="ok"
-                                                              style="color: red;font-size: 5px;">操作成功</span>
+                                                              style="color: red;font-size: 1vw">操作成功</span>
                                                         <script>
                                                             setTimeout(function () {
                                                                 $("#ok").hide()
