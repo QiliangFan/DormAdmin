@@ -28,9 +28,9 @@ var medicine_options = [
 
 $(function () {
     // 改变学院时触发事件:
-    $("#campus").change(function () {
-        console.log($("#campus").val())
-        switch ($("#campus").val()) {
+    $("#college").change(function () {
+        console.log($("#college").val())
+        switch ($("#college").val()) {
             case "软件学院": {
                 console.log("???")
                 $("#only_see").empty()
@@ -80,11 +80,11 @@ $(function () {
 function inspection_history_search() {
     var start_time = $("#start_time").val();
     var end_time = $("#end_time").val();
-    var campus = $("#campus").val();
+    var campus = $("#college").val();
     if (campus == "...") campus = "";
     var only_see = $("#only_see").val() ? $("#only_see").val() : "";
     console.log(start_time, end_time, campus, only_see);
 
     window.location.href = "/teacher/inspection_history_search?start_time=" + start_time +
-        "&end_time=" + end_time + "&campus=" + campus + "&only_see=" + only_see;
+        "&end_time=" + end_time + "&college=" + campus + "&only_see=" + only_see;
 }
