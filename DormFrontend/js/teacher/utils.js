@@ -47,7 +47,7 @@ function init(list, __itemnumber_per_page) {
 
     $("#first").attr("disabled", "disabled");
     $("#previous").attr("disabled", "disabled");
-    if (cur_page === max_page - 1) {
+    if (cur_page >= max_page - 1) {
         $("#next").attr("disabled", "disabled");
         $("#last").attr("disabled", "disabled");
     }

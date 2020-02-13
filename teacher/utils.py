@@ -11,6 +11,7 @@ from teacher.excel import read_excel
 
 from DormBackend.models import Room
 from PROPATH import PROJECT
+from teacher.excel.read_excel import read_excel_manage_bed
 
 
 def import_student(file_name: str):
@@ -63,6 +64,7 @@ def delete_all_account(file_name):
     except :
         print_exc()
 
+
 def reset_all_account(file_name):
     try:
         read_excel.read_excel_student_reset(file_name)
@@ -72,6 +74,14 @@ def reset_all_account(file_name):
         read_excel.read_excel_teacher_reset(file_name)
     except :
         print_exc()
+
+
+def add_inspection(file_name):
+    read_excel.read_excel_add_inspection(file_name)
+
+
+def manage_bed_util(file_name):
+    read_excel_manage_bed(file_name)
 
 if __name__ == "__main__":
     # read_excel("1.xls")

@@ -54,7 +54,7 @@
 
                                     {% include "../../../templates/roominput_template.html" %}
 
-                                    <button id="import" type="submit" class="btn btn-primary" style="margin: auto">导入
+                                    <button id="import" type="submit" class="btn btn-primary" style="margin:2vh auto">导入
                                     </button>
                                     <script>
                                         $("#import").click(function () {
@@ -94,6 +94,15 @@
                                         }, 5000)
                                     </script>
                                 {% endif %}
+                                {% if status == "ok" %}
+                                    <span id="ok"
+                                          style="color: red;font-size: 5px;">操作成功</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $("#ok").hide()
+                                        }, 5000)
+                                    </script>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -117,6 +126,15 @@
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">上传</button>
                                     </div>
+                                    {% if status == "file_ok" %}
+                                        <span id="ok"
+                                              style="color: red;font-size: 5px;">操作成功</span>
+                                        <script>
+                                            setTimeout(function () {
+                                                $("#ok").hide()
+                                            }, 5000)
+                                        </script>
+                                    {% endif %}
                                 </form>
                             </div>
                         </div>

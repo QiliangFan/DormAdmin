@@ -13,12 +13,12 @@ def start_django():
     # 判断操作系统类型
     sys_name: str = os.name.upper()
     if sys_name.startswith("NT"):  # windows系列
-        os.system("python manage.py makemigrations")
-        os.system("python manage.py migrate")
+        # os.system("python manage.py makemigrations")
+        # os.system("python manage.py migrate")
         os.system("python manage.py runserver 8000")
     elif sys_name.startswith("POSIX"):  # unix linux 系列
-        os.system("python3 manage.py makemigrations")
-        os.system("python3 manage.py migrate")
+        # os.system("python3 manage.py makemigrations")
+        # os.system("python3 manage.py migrate")
         os.system("python3 manage.py runserver 8000")
 
 

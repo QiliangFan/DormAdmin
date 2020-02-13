@@ -1,10 +1,15 @@
+from traceback import print_exc
 from typing import Tuple
 
 
 def parse_college(value: str) -> Tuple[str, str]:
     value = value.replace(" ", "")
-    value = value.replace(")", "")
-    college, detail = value.split("(")
+    value = value.replace("）", "")
+    try:
+        college, detail = value.split("（")
+    except :
+        college = value
+        detail = ""
     if college == "泰达物理":
         college = "物理学院"
     elif college == "泰达生物":
