@@ -8,7 +8,7 @@ from django.shortcuts import render
 from DormBackend.models import Teacher, ManagerAccount, InspectionHistory, Student, Room, Warning, StuAccount
 from PROPATH import PROJECT
 from teacher.utils import import_student, import_teacher, delete_all_account, reset_all_account, \
-    add_inspection, manage_bed_util
+    add_inspection, manage_bed_util, update_dorm
 
 
 def targetsearch_result(request: HttpRequest):

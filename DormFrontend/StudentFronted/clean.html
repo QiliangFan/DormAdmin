@@ -35,8 +35,6 @@
                       <tr>
                           <th>#</th>
                           <th>宿舍号</th>
-                          <th>年份</th>
-                          <th>月份</th>
                           <th>日期</th>
                           <th>评分</th>
                           <th>备注</th>
@@ -47,9 +45,7 @@
                           <tr>
                           <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ i.room.room_id }}</td>
-                            <td>{{ i.year  }}</td>
-                            <td>{{ i.month }}</td>
-                            <td>{{ i.day }}</td>
+                            <td>{{ i.date }}</td>
                             <td>{{ i.result }}</td>
                             <td>{{ i.comment|truncatechars:20 }}</td>
                         </tr>
