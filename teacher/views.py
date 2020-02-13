@@ -96,14 +96,14 @@ def inspection_history_search(request: HttpRequest):
 
     start_time = data["start_time"]
     end_time = data["end_time"]
-    campus = data["campus"]
+    campus = data["college"]
     only_see = data["only_see"]
     if only_see == "全部" or only_see == "":
         only_see = ""
 
     if campus != "":  # 对学院进行筛选
         if only_see != "":  # 对detail进行筛选
-            stu_list = Student.objects.filter(Q(campus=campus) & Q(detail=only_see))
+            stu_list = Student.objects.filter(Q(college=campus) & Q(detail=only_see))
             room_list = []
             room_id_list = []
             for stu_item in stu_list:
@@ -113,7 +113,7 @@ def inspection_history_search(request: HttpRequest):
                 Q(date__gte=start_time) & Q(date__lte=end_time) & Q(room_id__in=room_id_list))
             result = list(result)
         else:  # 不对进行detail筛选
-            stu_list = Student.objects.filter(Q(campus=campus))
+            stu_list = Student.objects.filter(Q(college=campus))
             room_list = []
             room_id_list = []
             for stu_item in stu_list:
