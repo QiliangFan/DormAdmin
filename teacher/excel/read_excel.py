@@ -1,3 +1,4 @@
+from datetime import datetime
 from traceback import print_exc
 
 import xlrd
@@ -464,8 +465,16 @@ def read_excel_add_inspection(filename:str):
                     room = Room.objects.filter(Q(build=build) & Q(door_id=door_id) & Q(room_id=room_id) & Q(singleRoom_id=singleRoom_id)).first()
                 else:
                     continue
-                inspection = InspectionHistory()
 
+                # 判断是否有相同的inspection
+                today = datetime.now().strftime("%Y-%m-%d")
+                inspection = InspectionHistory.objects.filter(Q(build=build)&
+                                                              Q(door_id=door_id)&
+                                                              Q(room_id=room_id)&
+                                                              Q(singleRoom_id=singleRoom_id)&
+                                                              Q(date=today)).first()
+                if not inspection:
+                    inspection = InspectionHistory()
                 inspection.room = room
                 inspection.result = result
                 inspection.comment = comment
