@@ -87,7 +87,7 @@ def read_excel_student(filename):
                 student.save()
 
                 account.account_name = student
-                account.pwd = "12346"
+                account.pwd = "123456"
                 room.save()
                 account.save()
             except :
