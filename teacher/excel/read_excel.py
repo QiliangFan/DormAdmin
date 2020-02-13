@@ -172,7 +172,7 @@ def read_excel_student_del(filename):
                 student.delete()
 
                 account.account_name = student
-                account.pwd = "12346"
+                account.pwd = "123456"
                 room.save()
                 account.delete()
             except:
@@ -233,7 +233,7 @@ def read_excel_student_reset(filename:str):
                     account = StuAccount.objects.filter(account_name=student).first()
                 else:
                     continue
-                account.pwd = "12346"
+                account.pwd = "123456"
                 account.save()
             except:
                 continue
@@ -302,7 +302,7 @@ def read_excel_teacher(filename:str, level:str):
                 teacher.save()
 
                 account.account_name = teacher
-                account.pwd = "12346"
+                account.pwd = "123456"
                 account.level = level
                 account.save()
             except:
