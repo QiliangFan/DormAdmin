@@ -53,7 +53,7 @@ def index(request: HttpRequest):  # remember this for dorm data
     """
     第一次在新服务器上运行此后台, 请务必取消注释, 从而生成宿舍信息
     """
-    # update_dorm(PROJECT + "teacher/files/dorm.json")
+    update_dorm(PROJECT + "teacher/files/dorm.json")
     return render(request, "teacher/index.html", {})
 
 

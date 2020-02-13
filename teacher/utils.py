@@ -19,6 +19,8 @@ def import_student(file_name: str):
 
 
 def update_dorm(file_name: str):
+    if len(Room.objects.all()) > 0:
+        return
     with open(file_name, "r") as fp:
         data:dict = simplejson.load(fp=fp)
     for build, item in data.items():
